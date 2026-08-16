@@ -1,0 +1,448 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AWS UG Pin Design</title>
+  <style>
+    :root {
+      --bg: #12151b;
+      --card-bg: #181c24;
+      --card-hover: #202632;
+      --border: rgba(255, 255, 255, 0.08);
+      --border-hover: rgba(255, 255, 255, 0.22);
+      --text: #ffffff;
+      --text-muted: #94a3b8;
+      --text-dim: #64748b;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background-color: var(--bg);
+      color: var(--text);
+      font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Helvetica Neue", Arial, sans-serif;
+      -webkit-font-smoothing: antialiased;
+      padding: 2.5rem 1.5rem 6rem;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    /* Minimal Top Nav */
+    nav {
+      display: flex;
+      gap: 2rem;
+      margin-bottom: 3rem;
+      padding-bottom: 1rem;
+      border-bottom: 1px solid var(--border);
+      flex-wrap: wrap;
+    }
+
+    nav a {
+      color: var(--text-muted);
+      text-decoration: none;
+      font-size: 0.95rem;
+      font-weight: 500;
+      transition: color 0.15s ease;
+    }
+
+    nav a:hover {
+      color: #ffffff;
+    }
+
+    /* Section Structure */
+    section {
+      margin-bottom: 4.5rem;
+    }
+
+    .section-title {
+      font-size: 1.25rem;
+      font-weight: 600;
+      color: #ffffff;
+      margin-bottom: 1.25rem;
+    }
+
+    /* Section 1: Reference Outline Containers */
+    .ref-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      gap: 1rem;
+    }
+
+    .ref-card {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      overflow: hidden;
+      aspect-ratio: 4 / 3;
+      cursor: zoom-in;
+      transition: border-color 0.2s ease, transform 0.2s ease;
+    }
+
+    .ref-card:hover {
+      border-color: var(--border-hover);
+      transform: translateY(-2px);
+    }
+
+    .ref-card img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    /* Catalogue Thumbnail Directory Grids */
+    .catalogue-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(210px, 1fr));
+      gap: 1rem;
+    }
+
+    .catalogue-item {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      overflow: hidden;
+      cursor: pointer;
+      display: flex;
+      flex-direction: column;
+      transition: all 0.2s ease;
+    }
+
+    .catalogue-item:hover {
+      background: var(--card-hover);
+      border-color: var(--border-hover);
+      transform: translateY(-2px);
+    }
+
+    .catalogue-thumb {
+      width: 100%;
+      aspect-ratio: 16 / 9;
+      background: #0a0c10;
+      overflow: hidden;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .catalogue-thumb img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      transition: opacity 0.2s ease;
+    }
+
+    .catalogue-item:hover .catalogue-thumb img {
+      opacity: 0.9;
+    }
+
+    .catalogue-info {
+      padding: 0.65rem 0.85rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .catalogue-name {
+      font-size: 0.85rem;
+      font-weight: 500;
+      color: var(--text);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .catalogue-icon {
+      font-size: 0.75rem;
+      color: var(--text-dim);
+      margin-left: 0.5rem;
+    }
+
+    /* Lightbox Modal */
+    .lightbox {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(10, 12, 16, 0.95);
+      z-index: 1000;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 1.5rem;
+      cursor: zoom-out;
+    }
+
+    .lightbox.active {
+      display: flex;
+    }
+
+    .lightbox-content {
+      max-width: 96%;
+      max-height: 90vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    .lightbox-img {
+      max-width: 100%;
+      max-height: 84vh;
+      object-fit: contain;
+      border-radius: 4px;
+      border: 1px solid var(--border);
+      box-shadow: 0 15px 40px rgba(0,0,0,0.8);
+    }
+
+    .lightbox-caption {
+      color: var(--text-muted);
+      font-size: 0.95rem;
+      font-weight: 500;
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+
+    <nav>
+      <a href="#sec-1">一、参考图</a>
+      <a href="#sec-2">二、单体变种</a>
+      <a href="#sec-3">三、精选方案</a>
+      <a href="#sec-4">四、特殊变种</a>
+    </nav>
+
+    <!-- ==================== 一、参考图 ==================== -->
+    <section id="sec-1">
+      <h2 class="section-title">一、参考图</h2>
+      <div class="ref-grid">
+        <div class="ref-card" onclick="openLightbox('./参考图/微信图片_20260815190920.jpg', '参考图 01')">
+          <img src="./参考图/微信图片_20260815190920.jpg" alt="参考 01">
+        </div>
+        <div class="ref-card" onclick="openLightbox('./参考图/微信图片_20260815190934.jpg', '参考图 02')">
+          <img src="./参考图/微信图片_20260815190934.jpg" alt="参考 02">
+        </div>
+        <div class="ref-card" onclick="openLightbox('./参考图/微信图片_20260815190937.jpg', '参考图 03')">
+          <img src="./参考图/微信图片_20260815190937.jpg" alt="参考 03">
+        </div>
+        <div class="ref-card" onclick="openLightbox('./参考图/微信图片_20260815190939.jpg', '参考图 04')">
+          <img src="./参考图/微信图片_20260815190939.jpg" alt="参考 04">
+        </div>
+        <div class="ref-card" onclick="openLightbox('./参考图/微信图片_20260815190942.jpg', '参考图 05')">
+          <img src="./参考图/微信图片_20260815190942.jpg" alt="参考 05">
+        </div>
+        <div class="ref-card" onclick="openLightbox('./参考图/微信图片_20260815190944.jpg', '参考图 06')">
+          <img src="./参考图/微信图片_20260815190944.jpg" alt="参考 06">
+        </div>
+        <div class="ref-card" onclick="openLightbox('./参考图/微信图片_20260815190946.jpg', '参考图 07')">
+          <img src="./参考图/微信图片_20260815190946.jpg" alt="参考 07">
+        </div>
+        <div class="ref-card" onclick="openLightbox('./参考图/微信图片_20260815190948.jpg', '参考图 08')">
+          <img src="./参考图/微信图片_20260815190948.jpg" alt="参考 08">
+        </div>
+        <div class="ref-card" onclick="openLightbox('./参考图/微信图片_20260815190951.jpg', '参考图 09')">
+          <img src="./参考图/微信图片_20260815190951.jpg" alt="参考 09">
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================== 二、单体变种 ==================== -->
+    <section id="sec-2">
+      <h2 class="section-title">二、单体变种</h2>
+      <div class="catalogue-grid">
+        <div class="catalogue-item" onclick="openLightbox('./参考图/pure_1m_base_pin.jpg', '核心基础母体')">
+          <div class="catalogue-thumb">
+            <img src="./参考图/pure_1m_base_pin.jpg" alt="核心基础母体">
+          </div>
+          <div class="catalogue-info">
+            <span class="catalogue-name">核心基础母体</span>
+            <span class="catalogue-icon">展开 ↗</span>
+          </div>
+        </div>
+
+        <div class="catalogue-item" onclick="openLightbox('./1月份入门勋章变体方案/变体1_无旗帜极简款.jpg', '变体 1. 无旗帜款')">
+          <div class="catalogue-thumb">
+            <img src="./1月份入门勋章变体方案/变体1_无旗帜极简款.jpg" alt="变体 1">
+          </div>
+          <div class="catalogue-info">
+            <span class="catalogue-name">变体 1. 无旗帜款</span>
+            <span class="catalogue-icon">展开 ↗</span>
+          </div>
+        </div>
+
+        <div class="catalogue-item" onclick="openLightbox('./1月份入门勋章变体方案/变体2A_30天计时款.jpg', '变体 2A. 30 天款')">
+          <div class="catalogue-thumb">
+            <img src="./1月份入门勋章变体方案/变体2A_30天计时款.jpg" alt="变体 2A">
+          </div>
+          <div class="catalogue-info">
+            <span class="catalogue-name">变体 2A. 30 天款</span>
+            <span class="catalogue-icon">展开 ↗</span>
+          </div>
+        </div>
+
+        <div class="catalogue-item" onclick="openLightbox('./1月份入门勋章变体方案/变体2B_360天年度巅峰款.jpg', '变体 2B. 360 天款')">
+          <div class="catalogue-thumb">
+            <img src="./1月份入门勋章变体方案/变体2B_360天年度巅峰款.jpg" alt="变体 2B">
+          </div>
+          <div class="catalogue-info">
+            <span class="catalogue-name">变体 2B. 360 天款</span>
+            <span class="catalogue-icon">展开 ↗</span>
+          </div>
+        </div>
+
+        <div class="catalogue-item" onclick="openLightbox('./1月份入门勋章变体方案/变体3_半圆底水平分割款.jpg', '变体 3. 半圆底款')">
+          <div class="catalogue-thumb">
+            <img src="./1月份入门勋章变体方案/变体3_半圆底水平分割款.jpg" alt="变体 3">
+          </div>
+          <div class="catalogue-info">
+            <span class="catalogue-name">变体 3. 半圆底款</span>
+            <span class="catalogue-icon">展开 ↗</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================== 三、精选方案 ==================== -->
+    <section id="sec-3">
+      <h2 class="section-title">三、精选方案</h2>
+      <div class="catalogue-grid">
+        <div class="catalogue-item" onclick="openLightbox('./方案01_创新星芒灯塔/1月与12月同源对比设计图.jpg', '方案 01 · 创新星芒灯塔')">
+          <div class="catalogue-thumb">
+            <img src="./方案01_创新星芒灯塔/1月与12月同源对比设计图.jpg" alt="方案01">
+          </div>
+          <div class="catalogue-info">
+            <span class="catalogue-name">方案 01 · 创新星芒灯塔</span>
+            <span class="catalogue-icon">展开 ↗</span>
+          </div>
+        </div>
+
+        <div class="catalogue-item" onclick="openLightbox('./方案02_代码尖括号与Git分支/1月与12月同源对比设计图.jpg', '方案 02 · 代码尖括号与 Git 分支')">
+          <div class="catalogue-thumb">
+            <img src="./方案02_代码尖括号与Git分支/1月与12月同源对比设计图.jpg" alt="方案02">
+          </div>
+          <div class="catalogue-info">
+            <span class="catalogue-name">方案 02 · 代码尖括号与 Git 分支</span>
+            <span class="catalogue-icon">展开 ↗</span>
+          </div>
+        </div>
+
+        <div class="catalogue-item" onclick="openLightbox('./方案03_微服务模块积木/1月与12月同源对比设计图.jpg', '方案 03 · 微服务模块积木')">
+          <div class="catalogue-thumb">
+            <img src="./方案03_微服务模块积木/1月与12月同源对比设计图.jpg" alt="方案03">
+          </div>
+          <div class="catalogue-info">
+            <span class="catalogue-name">方案 03 · 微服务模块积木</span>
+            <span class="catalogue-icon">展开 ↗</span>
+          </div>
+        </div>
+
+        <div class="catalogue-item" onclick="openLightbox('./方案04_展翅羽翼/1月与12月同源对比设计图.jpg', '方案 04 · 展翅羽翼')">
+          <div class="catalogue-thumb">
+            <img src="./方案04_展翅羽翼/1月与12月同源对比设计图.jpg" alt="方案04">
+          </div>
+          <div class="catalogue-info">
+            <span class="catalogue-name">方案 04 · 展翅羽翼</span>
+            <span class="catalogue-icon">展开 ↗</span>
+          </div>
+        </div>
+
+        <div class="catalogue-item" onclick="openLightbox('./方案05_荣耀月桂/1月与12月同源对比设计图.jpg', '方案 05 · 荣耀月桂')">
+          <div class="catalogue-thumb">
+            <img src="./方案05_荣耀月桂/1月与12月同源对比设计图.jpg" alt="方案05">
+          </div>
+          <div class="catalogue-info">
+            <span class="catalogue-name">方案 05 · 荣耀月桂</span>
+            <span class="catalogue-icon">展开 ↗</span>
+          </div>
+        </div>
+
+        <div class="catalogue-item" onclick="openLightbox('./方案06_开源共筑篝火/1月与12月同源对比设计图.jpg', '方案 06 · 开源共筑篝火')">
+          <div class="catalogue-thumb">
+            <img src="./方案06_开源共筑篝火/1月与12月同源对比设计图.jpg" alt="方案06">
+          </div>
+          <div class="catalogue-info">
+            <span class="catalogue-name">方案 06 · 开源共筑篝火</span>
+            <span class="catalogue-icon">展开 ↗</span>
+          </div>
+        </div>
+
+        <div class="catalogue-item" onclick="openLightbox('./方案08_分布式拓扑节点/1月与12月同源对比设计图.jpg', '方案 07 · 分布式拓扑节点')">
+          <div class="catalogue-thumb">
+            <img src="./方案08_分布式拓扑节点/1月与12月同源对比设计图.jpg" alt="方案07">
+          </div>
+          <div class="catalogue-info">
+            <span class="catalogue-name">方案 07 · 分布式拓扑节点</span>
+            <span class="catalogue-icon">展开 ↗</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================== 四、特殊变种 ==================== -->
+    <section id="sec-4">
+      <h2 class="section-title">四、特殊变种</h2>
+      <div class="catalogue-grid">
+        <div class="catalogue-item" onclick="openLightbox('./新视觉风格探索_数字超级符号篇/01_数字超级符号_全阶抽象小房子演进矩阵.jpg', '4.1 数字超级符号')">
+          <div class="catalogue-thumb">
+            <img src="./新视觉风格探索_数字超级符号篇/01_数字超级符号_全阶抽象小房子演进矩阵.jpg" alt="数字超级符号">
+          </div>
+          <div class="catalogue-info">
+            <span class="catalogue-name">4.1 数字超级符号</span>
+            <span class="catalogue-icon">展开 ↗</span>
+          </div>
+        </div>
+
+        <div class="catalogue-item" onclick="openLightbox('./新视觉风格探索_时间圆环篇/01_时间圆环_全阶演进总图.jpg', '4.2 时间圆环')">
+          <div class="catalogue-thumb">
+            <img src="./新视觉风格探索_时间圆环篇/01_时间圆环_全阶演进总图.jpg" alt="时间圆环">
+          </div>
+          <div class="catalogue-info">
+            <span class="catalogue-name">4.2 时间圆环</span>
+            <span class="catalogue-icon">展开 ↗</span>
+          </div>
+        </div>
+
+        <div class="catalogue-item" onclick="openLightbox('./新视觉风格探索_IP材质篇/01_IP材质_全阶演进总图.jpg', '4.3 IP 材质')">
+          <div class="catalogue-thumb">
+            <img src="./新视觉风格探索_IP材质篇/01_IP材质_全阶演进总图.jpg" alt="IP 材质">
+          </div>
+          <div class="catalogue-info">
+            <span class="catalogue-name">4.3 IP 材质</span>
+            <span class="catalogue-icon">展开 ↗</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </div>
+
+  <!-- Lightbox Modal -->
+  <div id="lightbox" class="lightbox" onclick="closeLightbox()">
+    <div class="lightbox-content" onclick="event.stopPropagation()">
+      <img id="lightbox-img" class="lightbox-img" src="" alt="Full view">
+      <div id="lightbox-caption" class="lightbox-caption"></div>
+    </div>
+  </div>
+
+  <script>
+    function openLightbox(src, caption) {
+      document.getElementById('lightbox-img').src = src;
+      document.getElementById('lightbox-caption').innerText = caption;
+      document.getElementById('lightbox').classList.add('active');
+    }
+    function closeLightbox() {
+      document.getElementById('lightbox').classList.remove('active');
+    }
+    document.addEventListener('keydown', function(e) {
+      if (e.key === 'Escape') closeLightbox();
+    });
+  </script>
+</body>
+</html>
