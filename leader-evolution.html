@@ -1,0 +1,579 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AWS UG 社区勋章 · UG Leader 六大精选方案演进总图</title>
+  <style>
+    :root {
+      --bg: #0d1017;
+      --card-bg: #151922;
+      --card-hover: #1c2230;
+      --border: rgba(255, 255, 255, 0.09);
+      --border-hover: rgba(255, 153, 0, 0.45);
+      --aws-orange: #ff9900;
+      --text: #ffffff;
+      --text-muted: #94a3b8;
+      --text-dim: #64748b;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background-color: var(--bg);
+      color: var(--text);
+      font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+      -webkit-font-smoothing: antialiased;
+      padding: 2.5rem 1.5rem 6rem;
+    }
+
+    .container {
+      max-width: 1280px;
+      margin: 0 auto;
+    }
+
+    .page-nav-tabs {
+      display: flex;
+      gap: 1rem;
+      margin-bottom: 2.5rem;
+      padding: 0.4rem;
+      background: #141822;
+      border-radius: 8px;
+      border: 1px solid var(--border);
+    }
+
+    .page-nav-tab {
+      flex: 1;
+      text-align: center;
+      padding: 0.65rem 1rem;
+      border-radius: 6px;
+      font-size: 0.9rem;
+      font-weight: 500;
+      text-decoration: none;
+      transition: all 0.2s ease;
+      color: var(--text-muted);
+      border: 1px solid transparent;
+    }
+
+    .page-nav-tab:hover {
+      color: #ffffff;
+      background: rgba(255, 255, 255, 0.04);
+    }
+
+    .page-nav-tab.active {
+      background: rgba(255, 153, 0, 0.15);
+      color: var(--aws-orange);
+      font-weight: 600;
+      border: 1px solid rgba(255, 153, 0, 0.35);
+    }
+
+    header {
+      margin-bottom: 2.5rem;
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 1.5rem;
+    }
+
+    .badge-tag {
+      display: inline-block;
+      padding: 0.25rem 0.6rem;
+      font-size: 0.75rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      border-radius: 4px;
+      background: rgba(255, 153, 0, 0.15);
+      color: var(--aws-orange);
+      border: 1px solid rgba(255, 153, 0, 0.3);
+      margin-bottom: 0.75rem;
+    }
+
+    h1 {
+      font-size: 1.85rem;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      margin-bottom: 0.5rem;
+    }
+
+    .subtitle {
+      color: var(--text-muted);
+      font-size: 0.95rem;
+      line-height: 1.5;
+    }
+
+    .scheme-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 3rem;
+    }
+
+    .scheme-card {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      transition: all 0.25s ease;
+    }
+
+    .scheme-card:hover {
+      border-color: var(--border-hover);
+      box-shadow: 0 16px 45px rgba(0, 0, 0, 0.5);
+    }
+
+    .scheme-preview-box {
+      width: 100%;
+      aspect-ratio: 16 / 9;
+      background: #080a0e;
+      overflow: hidden;
+      border-bottom: 1px solid var(--border);
+      position: relative;
+      cursor: zoom-in;
+    }
+
+    .scheme-preview-box img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      transition: transform 0.35s ease;
+    }
+
+    .scheme-card:hover .scheme-preview-box img {
+      transform: scale(1.015);
+    }
+
+    .expand-badge {
+      position: absolute;
+      bottom: 14px;
+      right: 14px;
+      background: rgba(13, 16, 23, 0.85);
+      backdrop-filter: blur(8px);
+      padding: 0.35rem 0.75rem;
+      border-radius: 6px;
+      font-size: 0.8rem;
+      font-weight: 500;
+      color: var(--aws-orange);
+      border: 1px solid rgba(255, 153, 0, 0.3);
+      display: flex;
+      align-items: center;
+      gap: 0.35rem;
+      pointer-events: none;
+    }
+
+    .scheme-content {
+      padding: 1.75rem 2rem;
+      display: flex;
+      flex-direction: column;
+      gap: 1.25rem;
+    }
+
+    .scheme-title-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+    }
+
+    .scheme-title {
+      font-size: 1.35rem;
+      font-weight: 600;
+      color: #ffffff;
+    }
+
+    .scheme-category {
+      font-size: 0.8rem;
+      padding: 0.2rem 0.6rem;
+      border-radius: 4px;
+      background: rgba(255, 255, 255, 0.06);
+      color: var(--text-dim);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+    }
+
+    .scheme-desc {
+      color: var(--text-muted);
+      font-size: 0.92rem;
+      line-height: 1.6;
+    }
+
+    .tier-steps {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 0.75rem;
+      margin-top: 0.5rem;
+      background: rgba(0, 0, 0, 0.25);
+      padding: 1rem;
+      border-radius: 8px;
+      border: 1px solid rgba(255, 255, 255, 0.05);
+    }
+
+    .tier-step {
+      display: flex;
+      flex-direction: column;
+      gap: 0.3rem;
+    }
+
+    .tier-label {
+      font-size: 0.75rem;
+      font-weight: 700;
+      color: var(--aws-orange);
+      text-transform: uppercase;
+      letter-spacing: 0.03em;
+    }
+
+    .tier-info {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      line-height: 1.4;
+    }
+
+    .lightbox {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(7, 9, 13, 0.97);
+      z-index: 1000;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 1.5rem;
+      cursor: zoom-out;
+    }
+
+    .lightbox.active {
+      display: flex;
+    }
+
+    .lightbox-content {
+      max-width: 96%;
+      max-height: 94vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    .lightbox-img {
+      max-width: 100%;
+      max-height: 86vh;
+      object-fit: contain;
+      border-radius: 6px;
+      border: 1px solid var(--border);
+      box-shadow: 0 25px 60px rgba(0, 0, 0, 0.95);
+    }
+
+    .lightbox-caption {
+      color: #ffffff;
+      font-size: 1rem;
+      font-weight: 500;
+      text-align: center;
+      background: rgba(21, 25, 34, 0.85);
+      backdrop-filter: blur(8px);
+      padding: 0.45rem 1.25rem;
+      border-radius: 20px;
+      border: 1px solid var(--border);
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+
+    <!-- Multi-page Navigation -->
+    <div class="page-nav-tabs">
+      <a href="./index.html" class="page-nav-tab">📂 方案全景档案库 (历史完整版)</a>
+      <a href="./leader-evolution.html" class="page-nav-tab active">🌟 UG Leader 精选六方案 · 演进总图 (最新)</a>
+    </div>
+
+    <header>
+      <div class="badge-tag">AWS UG Contributor Pin · Leader Track</div>
+      <h1>AWS UG 社区勋章 · UG Leader 六大精选方案演进总图</h1>
+      <p class="subtitle">根据评审精选 6 大核心方案，专注 UG LEADER 核心角色，呈现商用级仿硬珐琅工程渲染图纸与阶梯演进总图。</p>
+    </header>
+
+    <div class="scheme-grid">
+
+      <!-- ==================== 方案 01 · 开源共筑篝火 ==================== -->
+      <div class="scheme-card">
+        <div class="scheme-preview-box" onclick="openLightbox('./方案06_开源共筑篝火/01_篝火_1至12月全阶演进总图.jpg', '方案 01 · 开源共筑篝火 (Builder Campfire Torch) · 全阶工程图')">
+          <img src="./方案06_开源共筑篝火/01_篝火_1至12月全阶演进总图.jpg" alt="方案01 开源共筑篝火">
+          <div class="expand-badge">
+            <span>点击查看 16:9 全屏超清大图</span>
+            <span>↗</span>
+          </div>
+        </div>
+        <div class="scheme-content">
+          <div class="scheme-title-row">
+            <h2 class="scheme-title">方案 01 · 开源共筑篝火 (Builder Campfire Torch)</h2>
+            <span class="scheme-category">经典传承方案 · 篝火火炬</span>
+          </div>
+          <p class="scheme-desc">
+            基于 AWS UG 核心小房子母体（28.0mm × 34.0mm）与加粗 24K 镀金立体凸棱。将开发者围炉篝火与共建火炬文化融入进阶路径，小房子内部文字排版 100% 同源一致，外围火焰逐级发散聚变。
+          </p>
+          <div class="tier-steps">
+            <div class="tier-step">
+              <span class="tier-label">1 (入门款)</span>
+              <span class="tier-info">纯净小房子母体，屋顶零外展装饰，AWS 活力橙底座。</span>
+            </div>
+            <div class="tier-step">
+              <span class="tier-label">3 (进阶款)</span>
+              <span class="tier-info">屋顶萌芽 1 簇金色几何微晶火苗。</span>
+            </div>
+            <div class="tier-step">
+              <span class="tier-label">6 (中坚款)</span>
+              <span class="tier-info">屋顶与两侧展开 6 簇层叠立体金焰翼展。</span>
+            </div>
+            <div class="tier-step">
+              <span class="tier-label">9 (专家款)</span>
+              <span class="tier-info">向外盛放 9 簇多层次立体金焰护甲。</span>
+            </div>
+            <div class="tier-step">
+              <span class="tier-label">12 (巅峰款)</span>
+              <span class="tier-info">360° 完整层叠几何火炬金盾，尊贵黑曜石底座。</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ==================== 方案 02 · 数字超级符号 ==================== -->
+      <div class="scheme-card">
+        <div class="scheme-preview-box" onclick="openLightbox('./新视觉风格探索_数字超级符号篇/03_数字超级符号_1至12月五阶全套演进总图.jpg', '方案 02 · 数字超级符号 (Digital Super Symbol) · 全阶工程图')">
+          <img src="./新视觉风格探索_数字超级符号篇/03_数字超级符号_1至12月五阶全套演进总图.jpg" alt="方案02 数字超级符号">
+          <div class="expand-badge">
+            <span>点击查看 16:9 全屏超清大图</span>
+            <span>↗</span>
+          </div>
+        </div>
+        <div class="scheme-content">
+          <div class="scheme-title-row">
+            <h2 class="scheme-title">方案 02 · 数字超级符号 (Digital Super Symbol)</h2>
+            <span class="scheme-category">探索视觉方案 · 超级符号</span>
+          </div>
+          <p class="scheme-desc">
+            现代切角房形徽章，左侧超大 3D 立体镀金数字为第一视觉焦点，右下切角象牙白色块承载官方 aws 与 UG LEADER。底色随阶段递进呈现活力橙 ➜ 琥珀金 ➜ 勃艮第红 ➜ 皇家紫 ➜ 黑曜石的高级色彩阶梯。
+          </p>
+          <div class="tier-steps">
+            <div class="tier-step">
+              <span class="tier-label">1 (入门款)</span>
+              <span class="tier-info">AWS 活力橙（Pantone 151C）底色 + 立体金色大数字「1」。</span>
+            </div>
+            <div class="tier-step">
+              <span class="tier-label">3 (进阶款)</span>
+              <span class="tier-info">琥珀金黄（Amber Gold）底色 + 立体金色大数字「3」。</span>
+            </div>
+            <div class="tier-step">
+              <span class="tier-label">6 (中坚款)</span>
+              <span class="tier-info">红宝石/勃艮第红（Ruby Burgundy）底色 + 立体金色大数字「6」。</span>
+            </div>
+            <div class="tier-step">
+              <span class="tier-label">9 (专家款)</span>
+              <span class="tier-info">皇家深靛紫（Indigo Purple）底色 + 立体金色大数字「9」。</span>
+            </div>
+            <div class="tier-step">
+              <span class="tier-label">12 (巅峰款)</span>
+              <span class="tier-info">黑曜石高光黑 + CNC 钻石滚花切角 24K 金边框 + 立体大数字「12」。</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ==================== 方案 03 · 时间圆环 (最新优化版) ==================== -->
+      <div class="scheme-card">
+        <div class="scheme-preview-box" onclick="openLightbox('./新视觉风格探索_时间圆环篇/02_时间圆环_1至12月五阶全套演进总图.jpg', '方案 03 · 时间圆环 (Time Progress Ring) · 最新优化版工程图')">
+          <img src="./新视觉风格探索_时间圆环篇/02_时间圆环_1至12月五阶全套演进总图.jpg" alt="方案03 时间圆环">
+          <div class="expand-badge">
+            <span>点击查看 16:9 全屏超清大图</span>
+            <span>↗</span>
+          </div>
+        </div>
+        <div class="scheme-content">
+          <div class="scheme-title-row">
+            <h2 class="scheme-title">方案 03 · 时间圆环 (Time Progress Ring · 优化版)</h2>
+            <span class="scheme-category">探索视觉方案 · 打卡进度圆环</span>
+          </div>
+          <p class="scheme-desc">
+            极简暗黑枪色圆形徽章。小房子底部与外圈圆环 100% 实心一体化融合（消除底部镂空洞），外圈同心圆凹槽从 12 点钟顺时针精确点亮进度弧线（30° ➜ 90° ➜ 180° ➜ 270°），直至 12 次达成 360° 纯金实心闭环。
+          </p>
+          <div class="tier-steps">
+            <div class="tier-step">
+              <span class="tier-label">1 (打卡 1 次)</span>
+              <span class="tier-info">外圈点亮 1/12 (约 30°) 活力橙弧线，枪黑小房子，标「1」。</span>
+            </div>
+            <div class="tier-step">
+              <span class="tier-label">3 (打卡 3 次)</span>
+              <span class="tier-info">外圈点亮 1/4 (精确 90°) 琥珀金弧线，枪黑小房子，标「3」。</span>
+            </div>
+            <div class="tier-step">
+              <span class="tier-label">6 (打卡 6 次)</span>
+              <span class="tier-info">外圈点亮 1/2 (精确 180° 半圆) 宝石红弧线，枪黑小房子，标「6」。</span>
+            </div>
+            <div class="tier-step">
+              <span class="tier-label">9 (打卡 9 次)</span>
+              <span class="tier-info">外圈点亮 3/4 (精确 270° 大半圆) 皇家紫弧线，枪黑小房子，标「9」。</span>
+            </div>
+            <div class="tier-step">
+              <span class="tier-label">12 (打卡 12 次)</span>
+              <span class="tier-info">整枚勋章蜕变为 360° 完整闭环的奢华全抛光 24K 纯金实金盾，标「12」。</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ==================== 方案 04 · IP 材质 (多邻国大透视版) ==================== -->
+      <div class="scheme-card">
+        <div class="scheme-preview-box" onclick="openLightbox('./新视觉风格探索_IP材质篇/02_IP材质_1至12月五阶全套演进总图.jpg', '方案 04 · IP 材质 (IP Mascot & Material Progression) · 灵动大透视全阶工程图')">
+          <img src="./新视觉风格探索_IP材质篇/02_IP材质_1至12月五阶全套演进总图.jpg" alt="方案04 IP 材质">
+          <div class="expand-badge">
+            <span>点击查看 16:9 全屏超清大图</span>
+            <span>↗</span>
+          </div>
+        </div>
+        <div class="scheme-content">
+          <div class="scheme-title-row">
+            <h2 class="scheme-title">方案 04 · IP 材质 (IP Mascot & Material Progression · 灵动版)</h2>
+            <span class="scheme-category">探索视觉方案 · 拟人 IP 破框</span>
+          </div>
+          <p class="scheme-desc">
+            官方小房子 IP（标准月牙笑眼 + 极简圆球手）。汲取多邻国大透视设计语言，以奔跑跃出的高动态姿态从背景轮廓金盾中破框而出。全阶单色纯粹性，材质由活力橙晋升至亮银、纯金、皇家紫与幻彩星光钻石闪粉。
+          </p>
+          <div class="tier-steps">
+            <div class="tier-step">
+              <span class="tier-label">1 (入门款)</span>
+              <span class="tier-info">AWS 活力橙硬珐琅小房子 + 24K 抛光金盾底座，标「1 UG LEADER」。</span>
+            </div>
+            <div class="tier-step">
+              <span class="tier-label">3 (进阶款)</span>
+              <span class="tier-info">100% 镜面高光亮银镀铬雕塑，标「3 UG LEADER」。</span>
+            </div>
+            <div class="tier-step">
+              <span class="tier-label">6 (中坚款)</span>
+              <span class="tier-info">100% 镜面全抛光 24K 奢华纯金雕塑，标「6 UG LEADER」。</span>
+            </div>
+            <div class="tier-step">
+              <span class="tier-label">9 (专家款)</span>
+              <span class="tier-info">100% 皇家深紫金属镀层雕塑，标「9 UG LEADER」。</span>
+            </div>
+            <div class="tier-step">
+              <span class="tier-label">12 (巅峰款)</span>
+              <span class="tier-info">幻彩星光钻石闪粉珐琅 + CNC 钻石切面 24K 纯金盾框，标「12 UG LEADER」。</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ==================== 方案 05 · 美国 66 号公路 · 风霜蜕变与真金岁月 (新) ==================== -->
+      <div class="scheme-card">
+        <div class="scheme-preview-box" onclick="openLightbox('./方案1.5_66号公路盾牌/01_66号公路_风霜真金五阶演进总图.jpg', '方案 05 · 美国 66 号公路 · 风霜蜕变与真金岁月 · 全阶工程图')">
+          <img src="./方案1.5_66号公路盾牌/01_66号公路_风霜真金五阶演进总图.jpg" alt="方案05 美国66号公路风霜蜕变">
+          <div class="expand-badge">
+            <span>点击查看 16:9 全屏超清大图</span>
+            <span>↗</span>
+          </div>
+        </div>
+        <div class="scheme-content">
+          <div class="scheme-title-row">
+            <h2 class="scheme-title">方案 05 · 美国 66 号公路 (US Route 66 Weathering & Solid Gold)</h2>
+            <span class="scheme-category">新概念方案 · 公路里程与岁月露金</span>
+          </div>
+          <p class="scheme-desc">
+            外轮廓采用世界公路文化象征的美国 66 号公路经典盾牌。以“公路远征与风霜淬炼”为故事核心，从原厂白底黑字标牌出发，白黑漆面随里程自然磨蚀剥落，逐渐露出底下的 24K 纯金胎体，直至 12 阶段铅华洗尽、蜕变为 100% 纯金实金盾牌！
+          </p>
+          <div class="tier-steps">
+            <div class="tier-step">
+              <span class="tier-label">1 (原厂标牌)</span>
+              <span class="tier-info">100% 经典白底黑字 66 号公路标牌 + 黑色「1」+ 金色细包边。</span>
+            </div>
+            <div class="tier-step">
+              <span class="tier-label">3 (初历风霜)</span>
+              <span class="tier-info">边缘与文字初显复古磨损剥落，露出 25% 抛光金边与金色「3」。</span>
+            </div>
+            <div class="tier-step">
+              <span class="tier-label">6 (中途沉淀)</span>
+              <span class="tier-info">约 50% 白黑漆面剥落，大面积露出拉丝与镜面黄金底胎，金色「6」。</span>
+            </div>
+            <div class="tier-step">
+              <span class="tier-label">9 (风霜淬炼)</span>
+              <span class="tier-info">75% 表面蜕变纯金，仅留斑驳白黑珐琅残迹，辉映金色「9」。</span>
+            </div>
+            <div class="tier-step">
+              <span class="tier-label">12 (终成真金)</span>
+              <span class="tier-info">100% 镜面 24K 纯金实金盾牌，3D 纯金浮雕 aws、UG LEADER 与特大「12」！</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ==================== 方案 06 · 极客骰子 · 2x2 四宫格圆角方块 (新) ==================== -->
+      <div class="scheme-card">
+        <div class="scheme-preview-box" onclick="openLightbox('./方案11_极客骰子四宫格/01_极客骰子_五阶全套演进总图.jpg', '方案 06 · 极客骰子 · 2x2 四宫格圆角方块 · 全阶工程图')">
+          <img src="./方案11_极客骰子四宫格/01_极客骰子_五阶全套演进总图.jpg" alt="方案06 极客骰子四宫格">
+          <div class="expand-badge">
+            <span>点击查看 16:9 全屏超清大图</span>
+            <span>↗</span>
+          </div>
+        </div>
+        <div class="scheme-content">
+          <div class="scheme-title-row">
+            <h2 class="scheme-title">方案 06 · 极客骰子 (Geek Dice · 2x2 Modular Rounded Square)</h2>
+            <span class="scheme-category">新概念方案 · 极客模块与骰子点数</span>
+          </div>
+          <p class="scheme-desc">
+            现代圆角正方形徽章，内部划分为 2x2 四宫格模块：左上为骰子点数（1点、3点、6点、9点、12点阵）、右上为象牙白 aws 标志、左下为 UG LEADER 角色标牌、右下为特大号立体金色数字。
+          </p>
+          <div class="tier-steps">
+            <div class="tier-step">
+              <span class="tier-label">1 (1 点)</span>
+              <span class="tier-info">1 个骰子单点 + AWS 活力橙底色 + 金色大字「1」。</span>
+            </div>
+            <div class="tier-step">
+              <span class="tier-label">3 (3 点)</span>
+              <span class="tier-info">3 个对角线骰子点 + 琥珀金黄底色 + 金色大字「3」。</span>
+            </div>
+            <div class="tier-step">
+              <span class="tier-label">6 (6 点)</span>
+              <span class="tier-info">6 个双排经典骰子点 + 活力橙红底色 + 金色大字「6」。</span>
+            </div>
+            <div class="tier-step">
+              <span class="tier-label">9 (9 点)</span>
+              <span class="tier-info">9 个九宫格点阵 + 皇家深紫底色 + 金色大字「9」。</span>
+            </div>
+            <div class="tier-step">
+              <span class="tier-label">12 (12 点阵)</span>
+              <span class="tier-info">12 个矩阵点阵 + 尊贵黑曜石高光黑底色与 24K 纯金外框 + 金色大字「12」。</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+
+  <!-- Lightbox Modal -->
+  <div id="lightbox" class="lightbox" onclick="closeLightbox()">
+    <div class="lightbox-content" onclick="event.stopPropagation()">
+      <img id="lightbox-img" class="lightbox-img" src="" alt="Full view">
+      <div id="lightbox-caption" class="lightbox-caption"></div>
+    </div>
+  </div>
+
+  <script>
+    function openLightbox(src, caption) {
+      document.getElementById('lightbox-img').src = src;
+      document.getElementById('lightbox-caption').innerText = caption;
+      document.getElementById('lightbox').classList.add('active');
+    }
+    function closeLightbox() {
+      document.getElementById('lightbox').classList.remove('active');
+    }
+    document.addEventListener('keydown', function(e) {
+      if (e.key === 'Escape') closeLightbox();
+    });
+  </script>
+</body>
+</html>
