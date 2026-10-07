@@ -1,0 +1,21 @@
+import fs from 'node:fs';
+import path from 'node:path';
+import {fileURLToPath} from 'node:url';
+import {createRequire} from 'node:module';
+const require=createRequire(import.meta.url),G=require('../assets/js/badge-dimensions-geometry.js');
+const root=path.resolve(path.dirname(fileURLToPath(import.meta.url)),'..');
+const [id,input,output]=process.argv.slice(2);
+if(!id||!input||!output){console.error('Usage: node scripts/compose-badge.mjs <1|3|6|9|12|12L|12R> <interior.png|jpg> <output.svg>');process.exit(1);}
+const spec=JSON.parse(fs.readFileSync(path.join(root,'specs/approved/house-v012.json'),'utf8'));
+const roofHalf=['12L','12R'].includes(id),badge=G.build(G.importSpec(spec).params).badges.find(b=>b.id===(roofHalf?'12':id));
+if(!badge)throw new Error('Unknown badge id');
+const width=roofHalf?badge.panel:badge.width,height=badge.height,polygons=roofHalf?[badge.polygons[0]]:badge.polygons;
+const bytes=fs.readFileSync(input);
+const png=bytes.subarray(0,8).equals(Buffer.from([137,80,78,71,13,10,26,10])),jpg=bytes[0]===255&&bytes[1]===216;
+if(!png&&!jpg)throw new Error('Only PNG/JPEG artwork is supported');
+const number=n=>Number(n.toFixed(9)).toString();
+const d=polygons.map(points=>points.map((p,i)=>`${i?'L':'M'}${number(p[0])},${number(p[1])}`).join(' ')+' Z').join(' ');
+const svg=`<svg xmlns="http://www.w3.org/2000/svg" width="${number(width)}mm" height="${number(height)}mm" viewBox="0 0 ${number(width)} ${number(height)}"><title>Approved badge ${id}; SVG contour fixed; interior image fitted without distortion</title><defs><clipPath id="approved"><path d="${d}"/></clipPath></defs><g clip-path="url(#approved)"><path d="${d}" fill="#fff"/><image x="0" y="0" width="${number(width)}" height="${number(height)}" preserveAspectRatio="xMidYMid slice" href="data:image/${png?'png':'jpeg'};base64,${bytes.toString('base64')}"/></g></svg>\n`;
+if(fs.existsSync(output))throw new Error('Output exists; choose a new revision filename');
+fs.mkdirSync(path.dirname(path.resolve(output)),{recursive:true});fs.writeFileSync(output,svg);
+console.log(`Wrote ${output}: immutable ${number(width)} x ${number(height)} mm outline. Inspect artwork alignment before production.`);

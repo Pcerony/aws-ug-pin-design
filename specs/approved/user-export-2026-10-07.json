@@ -1,0 +1,281 @@
+{
+  "schema": "aws-ug-badge-outline/v0.12",
+  "units": "mm",
+  "angleUnits": "degrees",
+  "status": "draft",
+  "exportedAt": "2026-10-07T09:49:34.461Z",
+  "parameters": {
+    "width": 80,
+    "wall": 40,
+    "rise": 40,
+    "depth": 60,
+    "taper": 6,
+    "gap": 2,
+    "inset": 12,
+    "frontThickness": 5,
+    "backThickness": 5,
+    "leftThickness": 5,
+    "rightThickness": 5,
+    "roofThickness": 5,
+    "roofOverhangDepth": 3,
+    "roofOverhangSide": 3,
+    "wallTilt": 5,
+    "baseWidth": 100,
+    "baseDepth": 120,
+    "baseThickness": 4,
+    "baseFloor": 1.5,
+    "baseClearance": 0.25,
+    "baseLayerThickness": 1.1
+  },
+  "derived": {
+    "sideWingDepth": 4.532098622878225,
+    "wallTiltPivot": "side-wall-bottom-joint",
+    "wallTiltPivots": [
+      {
+        "id": "1",
+        "point": [
+          28,
+          0,
+          30
+        ],
+        "axis": [
+          1,
+          0,
+          0
+        ]
+      },
+      {
+        "id": "6",
+        "point": [
+          28,
+          0,
+          -30
+        ],
+        "axis": [
+          1,
+          0,
+          0
+        ]
+      }
+    ],
+    "gableVerticalHeight": 79.69557584733964,
+    "gableTopOffset": 6.972459419812653,
+    "roofBaseDepth": 83.90686582054276,
+    "roofDepth": 89.90686582054276,
+    "roofSpan": 86,
+    "roofEaveHeight": 37,
+    "roofBasePanel": 56.568542494923804,
+    "outerDepth": 89.90686582054276,
+    "overallHeight": 83.53553390593274,
+    "roofThicknessDirection": "outward-slope-normal",
+    "innerWidth": 46,
+    "sideHeight": 52,
+    "roofPanel": 60.811,
+    "roofAngleDegrees": 45,
+    "sideSpacing": 56
+  },
+  "base": {
+    "width": 100,
+    "depth": 120,
+    "layerCount": 5,
+    "layerThickness": 1.1,
+    "totalThickness": 5.5,
+    "material": "cardboard",
+    "identicalLayers": true,
+    "singleSideClearance": 0.25,
+    "datum": -0.4357787137382908,
+    "slotType": "through-vertical-insertion-sweep"
+  },
+  "badges": [
+    {
+      "id": "1",
+      "name": "正面山墙",
+      "width": 80,
+      "height": 80,
+      "bottom": 68,
+      "thickness": 5,
+      "polygons": [
+        [
+          [
+            40,
+            0
+          ],
+          [
+            80,
+            40
+          ],
+          [
+            74,
+            80
+          ],
+          [
+            6,
+            80
+          ],
+          [
+            0,
+            40
+          ]
+        ]
+      ],
+      "type": "gable"
+    },
+    {
+      "id": "3",
+      "name": "左侧墙面",
+      "width": 69.06419724575645,
+      "height": 52,
+      "bottom": 60,
+      "wing": 4.532098622878225,
+      "thickness": 5,
+      "polygons": [
+        [
+          [
+            4.532098622878225,
+            0
+          ],
+          [
+            64.53209862287822,
+            0
+          ],
+          [
+            69.06419724575645,
+            0.19787569922922899
+          ],
+          [
+            64.53209862287822,
+            52
+          ],
+          [
+            4.532098622878225,
+            52
+          ],
+          [
+            0,
+            0.19787569922922899
+          ]
+        ]
+      ],
+      "type": "side"
+    },
+    {
+      "id": "6",
+      "name": "背面山墙",
+      "width": 80,
+      "height": 80,
+      "bottom": 68,
+      "thickness": 5,
+      "polygons": [
+        [
+          [
+            40,
+            0
+          ],
+          [
+            80,
+            40
+          ],
+          [
+            74,
+            80
+          ],
+          [
+            6,
+            80
+          ],
+          [
+            0,
+            40
+          ]
+        ]
+      ],
+      "type": "gable"
+    },
+    {
+      "id": "9",
+      "name": "右侧墙面",
+      "width": 69.06419724575645,
+      "height": 52,
+      "bottom": 60,
+      "wing": 4.532098622878225,
+      "thickness": 5,
+      "polygons": [
+        [
+          [
+            4.532098622878225,
+            0
+          ],
+          [
+            64.53209862287822,
+            0
+          ],
+          [
+            69.06419724575645,
+            0.19787569922922899
+          ],
+          [
+            64.53209862287822,
+            52
+          ],
+          [
+            4.532098622878225,
+            52
+          ],
+          [
+            0,
+            0.19787569922922899
+          ]
+        ]
+      ],
+      "type": "side"
+    },
+    {
+      "id": "12",
+      "name": "双片屋顶 · 展开",
+      "width": 123.62236636408618,
+      "height": 89.90686582054276,
+      "panel": 60.81118318204309,
+      "thickness": 5,
+      "polygons": [
+        [
+          [
+            0,
+            0
+          ],
+          [
+            60.81118318204309,
+            0
+          ],
+          [
+            60.81118318204309,
+            89.90686582054276
+          ],
+          [
+            0,
+            89.90686582054276
+          ]
+        ],
+        [
+          [
+            62.81118318204309,
+            0
+          ],
+          [
+            123.62236636408618,
+            0
+          ],
+          [
+            123.62236636408618,
+            89.90686582054276
+          ],
+          [
+            62.81118318204309,
+            89.90686582054276
+          ]
+        ]
+      ],
+      "type": "roof"
+    }
+  ],
+  "productionReady": false
+}

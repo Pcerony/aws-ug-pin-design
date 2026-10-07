@@ -1,0 +1,17 @@
+import fs from 'node:fs';
+import path from 'node:path';
+import { fileURLToPath } from 'node:url';
+import { createRequire } from 'node:module';
+const require=createRequire(import.meta.url),G=require('../assets/js/badge-dimensions-geometry.js'),B=require('../assets/js/badge-dimensions-base.js');
+const root=path.resolve(path.dirname(fileURLToPath(import.meta.url)),'..');
+const spec=JSON.parse(fs.readFileSync(path.join(root,'specs/approved/house-v012.json'),'utf8'));
+const params=G.importSpec(spec).params,model=G.build(params);
+const n=v=>Number(v.toFixed(9)).toString();
+const contour=points=>points.map((p,i)=>`${i?'L':'M'}${n(p[0])},${n(p[1])}`).join(' ')+' Z';
+const svg=(width,height,polygons,title)=>`<svg xmlns="http://www.w3.org/2000/svg" width="${n(width)}mm" height="${n(height)}mm" viewBox="0 0 ${n(width)} ${n(height)}"><title>${title}</title><path d="${polygons.map(contour).join(' ')}" fill="#fff" stroke="#222" stroke-width="0.15" stroke-linejoin="miter"/></svg>\n`;
+for(const badge of model.badges) fs.writeFileSync(path.join(root,`specs/approved/badge-${badge.id}.svg`),svg(badge.width,badge.height,badge.polygons,`Approved badge ${badge.id}; millimeters; do not change outline`));
+const roof=model.badges[4];
+for(const side of ['L','R']) fs.writeFileSync(path.join(root,`specs/approved/badge-12${side}.svg`),svg(roof.panel,roof.height,[roof.polygons[0]],`Approved roof half ${side}; rectangular; millimeters`));
+fs.writeFileSync(path.join(root,'specs/approved/base-layer.svg'),B.svg(B.build(params))+'\n');
+fs.writeFileSync(path.join(root,'data/approved-dimensions.js'),`window.BadgeApprovedSpec = ${JSON.stringify(spec)};\n`);
+console.log('Approved JSON validated; generated five badge contours, two roof halves, base template and browser snapshot.');
