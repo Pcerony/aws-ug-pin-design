@@ -28,11 +28,12 @@ test('metal selects reviewed clean 9 and 12 while preserving the other badges', 
   assert.deepEqual(sources['12R'].polygon, [[741,48],[1426,48],[1426,1024],[741,1024]]);
 });
 
-test('home gallery displays the current metal images without changing historical contours', () => {
+test('home gallery promotes puzzle images without changing historical contours', () => {
   const html = fs.readFileSync('index.html', 'utf8');
   const gallery = html.split('<section class="project-section">')[0];
   for (const id of ['1', '3', '6', '9', '12L']) {
-    assert.ok(gallery.includes(A.collections.metal.sources[id].src), id);
+    assert.ok(gallery.includes(A.collections.puzzle.sources[id].src), id);
+    assert.ok(!gallery.includes(A.collections.metal.sources[id].src), id);
   }
   assert.ok(html.includes('specs/approved/badge-9.svg'));
   assert.ok(html.includes('specs/approved/badge-12.svg'));

@@ -163,7 +163,7 @@
     }
     update(params, options) {
       this.params = { ...params }; this.options = options;
-      const collection = options.collection || 'metal';
+      const collection = options.collection || 'puzzle';
       if (window.BadgeArtwork && window.BadgeApprovedSpec && collection !== this.artworkCollection) this.loadArtwork(collection);
       const T = window.THREE, model = BadgeDimensions.assembly(params), separation = options.separation;
       const textured = options.artwork && this.artworkReady;

@@ -4,7 +4,7 @@ const fs = require('node:fs');
 const A = require('../assets/js/badge-artwork.js');
 const spec = JSON.parse(fs.readFileSync('specs/approved/house-v012.json', 'utf8'));
 
-test('metal remains the default and puzzle is a separate six-surface collection', () => {
+test('metal archive and puzzle retain separate six-surface collections', () => {
   assert.equal(A.collections.metalOriginal.sources, A.sources);
   assert.notEqual(A.collections.puzzle.sources, A.sources);
   assert.deepEqual(Object.keys(A.collections.puzzle.sources), Object.keys(A.sources));
