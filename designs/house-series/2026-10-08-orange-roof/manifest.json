@@ -1,0 +1,338 @@
+{
+  "date": "2026-10-08",
+  "status": "orange-roof-revision",
+  "roofEdits": {
+    "12L": {
+      "src": "designs/house-series/2026-10-08-orange-roof/badge-12L-orange-edit.png",
+      "crop": [
+        65,
+        0,
+        902,
+        1525
+      ]
+    },
+    "12R": {
+      "src": "designs/house-series/2026-10-08-orange-roof/badge-12R-orange-type-v02.png"
+    }
+  },
+  "outline": "specs/approved/house-v012.json",
+  "productionReady": false,
+  "surfaces": [
+    {
+      "id": "1",
+      "source": "designs/number-one/2026-10-08-kahn-refinement/04-smooth-arch-left-aligned-type.png",
+      "sourcePolygon": [
+        [
+          626,
+          51
+        ],
+        [
+          1200,
+          520
+        ],
+        [
+          1035,
+          1180
+        ],
+        [
+          216,
+          1180
+        ],
+        [
+          52,
+          505
+        ]
+      ],
+      "width": 80,
+      "height": 80,
+      "fit": {
+        "x": 0.6000000000000014,
+        "y": 1.252090592334497,
+        "width": 78.8,
+        "height": 77.495818815331,
+        "scale": 0.0686411149825784
+      },
+      "svg": "badge-1-fitted.svg",
+      "lettering": {
+        "src": "designs/house-series/2026-10-08-ivory-lettering/badge-1-ivory-edit.png",
+        "regions": [
+          [
+            0.635,
+            0.36,
+            0.305,
+            0.215
+          ],
+          [
+            0.635,
+            0.575,
+            0.24,
+            0.135
+          ],
+          [
+            0.635,
+            0.708,
+            0.245,
+            0.081
+          ]
+        ]
+      }
+    },
+    {
+      "id": "3",
+      "source": "designs/house-series/2026-10-08-three-four-directions/B-v02-A-window-details.png",
+      "sourcePolygon": [
+        [
+          49,
+          163
+        ],
+        [
+          1396,
+          163
+        ],
+        [
+          1265,
+          912
+        ],
+        [
+          171,
+          912
+        ]
+      ],
+      "width": 69.06419724575645,
+      "height": 52,
+      "fit": {
+        "x": 0.6000000000000014,
+        "y": 7.132040186684641,
+        "width": 67.86419724575644,
+        "height": 37.73591962663072,
+        "scale": 0.05038173514903967
+      },
+      "svg": "badge-3-fitted.svg",
+      "lettering": {
+        "src": "designs/house-series/2026-10-08-ivory-lettering/badge-3-ivory-edit.png",
+        "regions": [
+          [
+            0.059,
+            0.285,
+            0.255,
+            0.23
+          ],
+          [
+            0.079,
+            0.525,
+            0.214,
+            0.15
+          ],
+          [
+            0.08,
+            0.677,
+            0.205,
+            0.088
+          ]
+        ]
+      }
+    },
+    {
+      "id": "6",
+      "source": "designs/house-series/2026-10-08-six-depth/C-v03-horizontal-window.png",
+      "sourcePolygon": [
+        [
+          625,
+          51
+        ],
+        [
+          1200,
+          537
+        ],
+        [
+          1035,
+          1180
+        ],
+        [
+          217,
+          1180
+        ],
+        [
+          51,
+          507
+        ]
+      ],
+      "width": 80,
+      "height": 80,
+      "fit": {
+        "x": 0.6000000000000014,
+        "y": 1.2858137510879004,
+        "width": 78.8,
+        "height": 77.4283724978242,
+        "scale": 0.06858137510879025
+      },
+      "svg": "badge-6-fitted.svg",
+      "lettering": {
+        "src": "designs/house-series/2026-10-08-ivory-lettering/badge-6-ivory-edit.png",
+        "regions": [
+          [
+            0.64,
+            0.366,
+            0.3,
+            0.215
+          ],
+          [
+            0.644,
+            0.575,
+            0.226,
+            0.14
+          ],
+          [
+            0.644,
+            0.708,
+            0.226,
+            0.081
+          ]
+        ]
+      }
+    },
+    {
+      "id": "9",
+      "source": "designs/house-series/2026-10-08-kahn-enamel/badge-9-v02-architectural-window.png",
+      "sourcePolygon": [
+        [
+          48,
+          112
+        ],
+        [
+          1397,
+          112
+        ],
+        [
+          1245,
+          969
+        ],
+        [
+          190,
+          969
+        ]
+      ],
+      "width": 69.06419724575645,
+      "height": 52,
+      "fit": {
+        "x": 0.6000000000000014,
+        "y": 4.4434332692315515,
+        "width": 67.86419724575644,
+        "height": 43.1131334615369,
+        "scale": 0.05030704021182835
+      },
+      "svg": "badge-9-fitted.svg",
+      "lettering": {
+        "src": "designs/house-series/2026-10-08-ivory-lettering/badge-9-ivory-edit.png",
+        "regions": [
+          [
+            0.62,
+            0.22,
+            0.315,
+            0.268
+          ],
+          [
+            0.62,
+            0.511,
+            0.23,
+            0.169
+          ],
+          [
+            0.62,
+            0.683,
+            0.265,
+            0.107
+          ]
+        ]
+      }
+    },
+    {
+      "id": "12L",
+      "source": "designs/house-series/2026-10-08-roof-four-directions/CD-v01-left-C-right-D.png",
+      "sourcePolygon": [
+        [
+          132,
+          39
+        ],
+        [
+          710,
+          39
+        ],
+        [
+          710,
+          1015
+        ],
+        [
+          132,
+          1015
+        ]
+      ],
+      "width": 60.81118318204309,
+      "height": 89.90686582054276,
+      "fit": {
+        "x": 4.138906937192797,
+        "y": 0.6000000000000014,
+        "width": 52.533369307657495,
+        "height": 88.70686582054276,
+        "scale": 0.09088818219317905
+      },
+      "svg": "badge-12L-fitted.svg",
+      "lettering": null
+    },
+    {
+      "id": "12R",
+      "source": "designs/house-series/2026-10-08-roof-four-directions/CD-v01-left-C-right-D.png",
+      "sourcePolygon": [
+        [
+          761,
+          39
+        ],
+        [
+          1336,
+          39
+        ],
+        [
+          1336,
+          1015
+        ],
+        [
+          761,
+          1015
+        ]
+      ],
+      "width": 60.81118318204309,
+      "height": 89.90686582054276,
+      "fit": {
+        "x": 4.275239210482567,
+        "y": 0.6000000000000014,
+        "width": 52.26070476107795,
+        "height": 88.70686582054276,
+        "scale": 0.09088818219317905
+      },
+      "svg": "badge-12R-fitted.svg",
+      "lettering": {
+        "src": "designs/house-series/2026-10-08-ivory-lettering/badge-12R-ivory-edit.png",
+        "regions": [
+          [
+            0.092,
+            0.65,
+            0.378,
+            0.153
+          ],
+          [
+            0.105,
+            0.807,
+            0.245,
+            0.093
+          ],
+          [
+            0.105,
+            0.9,
+            0.321,
+            0.065
+          ]
+        ]
+      }
+    }
+  ]
+}

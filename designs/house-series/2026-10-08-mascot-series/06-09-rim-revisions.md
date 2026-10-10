@@ -1,0 +1,23 @@
+# 6 / 9 边框与裁切修订
+
+用户指出6左右错误边框，9顶部裁切及底部左右多余边框。
+
+当前评审候选：badge-6-mascot-v02-clean-rim.png，去除左右内边线及宽倒角条，仅保留单层细外边。badge-9-mascot-v03-complete-loop-clean-rim.png，橙色9完整圆头置于水平外顶线下，去除顶部覆盖条及底部左右边条。两枚均保留原吉祥物身份与动作、窗洞真实银色厚度。原图保留，网站不替换。生图比例存在近似，正式交付仍由批准SVG锁边。
+
+使用内置 image generation。6输入badge-6-mascot-v01.png；9先输入badge-9-mascot-v01.png，首个修订错误把9圆头变成了外形曲顶（未采用），再以批准 badge-9-reference.png 为首位轮廓依据、该中间图为内场参考，修正水平外顶。
+
+## 6 完整提示词
+```text
+Precise cleanup of EXISTING badge6. Remove ONLY incorrect inner perimeter borders on both left and right and bottom sides. Currently the ivory outer field contains a second inset pentagon outline and wide pale bevel strips, particularly diagonal from left shoulder toward bottom-left and right shoulder toward bottom-right, plus horizontal strip at bottom. These are NOT part of design. Delete all those INNER diagonal lines, bevel strips and inset bottom outline. Keep one single THIN silver outline at actual outer five-sided silhouette. Fill right-side ivory continuously right up to that thin rim. On bottom-left, extend existing cobalt-blue crescent cleanly to the outer rim where appropriate, no broad ivory border strip beside it; at upper-left retain naturally necessary ivory negative space but WITHOUT extra perimeter line or bevel. Do NOT remove actual architecture: preserve orange6 raised relief edges and exposed right-side silver thickness of rectangular blue window. Preserve BOTH existing orange house mascots EXACTLY (window hands on sill, seated bottom mascot dark oval shoes), orange house body pitched roof upper-right chimney lighter inset house line closed curved smile eyes open smile red tongue short limbs. Their scale, positions and expressions must not change. Preserve entire orange6, blue shapes, ivory raised aws smile UG LEADER and full existing 80x80 gable shape. No cropping or shifting architecture. Full object on white background, one thin outer rim, NO nested polygon, NO double frame, NO wide border bands. Color and material-only perimeter cleanup.
+```
+
+## 9 中间修订提示词（曲顶未采用）
+```text
+Fix this exact numeral9 enamel badge, NOT a new design. Two corrections: (1) RESTORE COMPLETE UPPER ORANGE9 CURVE. The current orange9 is incorrectly cut FLAT at its top by a wide horizontal ivory border band. REMOVE that horizontal border band and restore the complete smooth rounded outer arc of orange9 inside the real upper edge. Its highest point must be visible as a round arc with a small clean ivory breathing gap to the one thin outer silver rim; no flat top, no clipping, no ivory strip OVER the numeral. Recompose the orange9 and its existing blue windows just enough to fit full rounded loop within unchanged outer boundary, e.g. shrink the orange9+blue+two mascot group uniformly slightly and vertically reposition if necessary, not squash or flatten arc. Keep right-hand ivory text field in its existing location. (2) REMOVE ALL EXTRA INSET BORDERS: current wide ivory bevel bands along top, both sides and bottom are unwanted. Delete those bands and their inner diagonal/horizontal lines. Ivory right text field fills continuously to outer thin silver rim; bottom blue and orange regions extend to actual bottom rim. No separate inner rectangle, no broad empty bottom strip, no nested outline, no double frame. Existing true silver inner wall at RIGHT of upper arch window is structural thickness and MUST remain. Preserve recognizable orange9 geometry with arched blue upper recess and diagonal lower blue region, both existing orange house mascots with exact current identity and compact proportions (pitched roof, upper-right chimney, inset house line, closed curved smile eyes, open smile/red tongue, round hands, short legs, dark shoes), unchanged poses/occlusion. Lower mascot shoe contacts real blue bottom ledge. Right text aws smile UG LEADER remains warm ivory embossed, not black. Preserve actual full sidewall OUTER silhouette and its width/height approximately69.06419724575645/52, no cropping or swapping gable. Full badge on white background, one thin silver outer rim only. Result must show complete orange9 curved head and clean unframed fields to edges.
+```
+
+## 9 最终修订提示词
+```text
+图片1是准确的外轮廓模板，图片2仅是内部图案与吉祥物参考。修正9号勋章外形。必须使用图1的侧墙形状：顶部是一条水平直线，底部一条水平直线，左右直侧边略向内收。不要让数字9的圆弧变成徽章外轮廓，不要有向上凸起的圆形顶。将图2中的完整橙色数字9，包括完整的圆弧头、蓝色拱窗、下方蓝色凹面和两个小房子，重新整体等比例缩小一点并放入图1的固定边界内。橙色9的圆顶最高点低于顶部细银边约2毫米，数字圆弧完整可见，绝不被横向切平。数字9与顶部银边之间是平滑米白底色自然留白，不是独立边框条，不要第二条横线。左右和底部也没有内框或宽倒角条，只有最外一圈细银线；蓝色底层延续至底部最外银线。右侧米白色aws微笑UG LEADER位置布局不变，全部米白凸字。两个橙色小房子保持现有房形、屋顶、右上烟囱、浅橙房形内线、弧形笑眼、红舌开口笑脸、圆手和短脚比例，上窗挥手下层沿斜边探身且深色鞋底落在蓝色底沿。保留拱窗右侧真正的银色厚度面，不给窗加银色闭合圆环。整枚宽69.06419724575645mm高52mm，横向画幅，完整无遮挡，白色背景。最重要：外轮廓水平直顶不变，内部橙色9完整圆头不裁切，不增边框。不要把图2外轮廓的曲线当作设计要求。
+```
+

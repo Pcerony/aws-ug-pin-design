@@ -1,5 +1,27 @@
 # AWS UG 可拼装徽章项目规划与 AI 接手指南
-> 更新：2026-10-07。本文是当前主规范，与历史规则冲突时以本文和批准JSON为准。下一阶段：重新生图，保持尺寸不变。
+> 更新：2026-10-08。本文是当前主规范。尺寸以批准 JSON/SVG 为准。五枚视觉方案已选定，进入固定边界适配及 3D 评审。本地网站同步当前设计，未经另行要求不推送发布。
+
+## 当前决策与阶段
+2026-10-10 当前任务：用户认可 3 V05，要求保持 1、3、6 不动，仅重做金属版 9、12 的材质质量。9 V06 银框脏、12 V04 成色/曲线/噪点不合格；不能继续上传这些劣化图反复局部修补。要求网页 GPT 新对话从干净参考重建，保留布局、吉祥物动作、字号、低饱和蓝色、嵌字宽银框和批准尺寸。9 墙面米白凸字，12 橙色背景与凸字。常规浏览器/电脑操作已授权。本轮尚未实际生成新图，旧网站不变。新会话必须先读[当前交接](docs/handoff-2026-10-10-metal-quality.md)和[完整重生成稿](designs/house-series/2026-10-10-metal-clean-rebuild/README.md)。以下为历史阶段记录，不得覆盖此任务。
+
+2026-10-09 最新修正：用户否定网站程序画框的方式，要求实际重新生图。已在网页 GPT 逐枚生成金属珐琅版，添加宽银框及沿边凹刻文字，内场 aws / UG / LEADER 按原版宽高约50%的目标缩小，不继承拼块材质或接缝。当前六个板面见[金属版嵌字宽框](designs/house-series/2026-10-09-metal-engraved-rim/README.md)。网站保留“金属版 · 原版存档”和“拼块版 · 分支”独立切换。批准几何不变，生成图仍待用户评审，未经另行要求不发布。
+
+最新比例修订：以 3、9 的小房子主体尺度为准（约 8.2 mm 宽，不含伸出的手脚），1 使用 V07 小号落地版、6 使用 V04 小号窗内版、12 使用 V03 小号俯瞰/躺卧版。3、9 不修改。当前网站交付见[统一尺度贴图](designs/house-series/2026-10-08-mascot-scale-fitted/README.md)。以下此前版本选择均保留为历史，不再作为最新网站资产入口。徽章、开口和实体尺寸不变。
+
+吉祥物阶段最新决策：数字 1 保留 V06 降低拱顶版，不采用 V08。吉祥物身份使用 `参考图/基础变种/吉祥物/小房子.jpeg`。当前 3D 使用 3 吉祥物 V01、6 V03（仅窗内吉祥物）、9 V03（完整圆头及干净单框）、12 V02（左俯瞰、右躺卧）。用户已授权整套更新到网站 3D，最新固定边界交付见[吉祥物系列](designs/house-series/2026-10-08-mascot-selected/README.md)。批准几何不变；下方无吉祥物清单属于历史阶段。
+
+当前版本：1 修订 04、3 B-v02（B 布局+A 细节）、6 C-v03 横窗、9 v02 建筑拱窗、12 CD-v01（左 C / 右 D）。用户已完成五枚视觉选择，完整入口见[选定系列清单](designs/house-series/2026-10-08-selected/README.md)。这不批准照片轮廓、精确文字或浮雕工程尺寸。
+
+当前任务：保持批准实体尺寸，在[3D 组合](badge-dimensions.html?approved=1#model)检查六个可见板面的朝向、文字和拼合。内场等比例适配，原图保留；银色厚度为贴图表现，不是新增真实浮雕。以下首轮描述是历史迭代起点，不覆盖最新清单。生产就绪仍为 false。
+
+- 当前语言：康几何简化；大体块橙珐琅、钴蓝开口、象牙白留白、连续光滑银色结构、米白色凸字。
+- 屋顶 12 最新修订：两半背景及 2 下方 aws、微笑箭头、UG / LEADER 均为与数字同系的橙色，凸字仅靠高光与阴影体现。蓝色及银色保留，其余四枚与批准尺寸不变。最新交付见[橙色屋顶](designs/house-series/2026-10-08-orange-roof/README.md)。
+- 最新文字修订：aws、微笑箭头、UG、LEADER 与象牙白底色同系，只用柔和高光和阴影表现浅凸起，不使用黑色字面、深色描边或银色包边。当前贴图见[米白凸字版本](designs/house-series/2026-10-08-ivory-lettering/README.md)，旧黑字图仅作历史记录。
+- 数字 1：橙色上肩到尖顶、竖干到底；蓝色圆顶门到底；左侧宽银色门框与拱头连续。橙色右边界保留修订 04 位置，不采用已放弃的中线铺色 02。
+- 字标：aws 保持基准位置；UG / LEADER 两行与 aws 左侧对齐，LEADER 缩小至 UG 等宽。生成图仅近似满足，最终矢量稿精确落实。
+- 已完成：五枚内部图案选型；下一步评审整体拼合，并精修矢量与工艺，不再默认重新生图。
+- 首轮已生成并保留于 [康几何系列记录](designs/house-series/2026-10-08-kahn-enamel/README.md)。3/9 为侧墙窗，6 为背墙圆窗，12 为俯视天窗与屋面带；屋顶不得使用门洞。所有首轮图尚未通过轮廓精修或用户批准。
+- 详细规则见 [当前设计语言](docs/design-system-2026-10-08.md)，实际生图任务见 [下一阶段交接](docs/next-stage-generation.md)。
 
 ## 唯一尺寸真源
 用户确认的[specs/approved/house-v012.json](specs/approved/house-v012.json)是唯一真源；原始导出保留在同目录user-export-2026-10-07.json。status锁定只表示尺寸批准，productionReady仍为false。禁止使用旧28×34 mm、35 mm概念稿或工作台初始默认值。
@@ -28,7 +50,7 @@
 ## 单枚设计优先
 五枚为1、3、6、9、12，组装后是小房子；12是一枚双片折叠屋顶。首先单枚勋章要好看，有自己的设计语言，其次才考虑组合建筑感。数字应成为设计本身，可与门窗结构结合，不能只是把普通字体贴在墙上。橙色为最大彩色面积，允许结构性辅助色。关键词：几何、积木、极简。
 
-## 数字1五个方向与用户偏好
+## 历史数字1五方向与早期偏好
 素材已整理到[designs/number-one/2026-10-07/](designs/number-one/2026-10-07/)，完整原始提示词见目录README。
 
 |方案|文件|视觉语言|反馈|
@@ -39,36 +61,45 @@
 |4 / R|04-orbit.png|粗数字与不闭合环带，橙+深青绿+浅黄|保留参考|
 |5 / S|05-mosaic.png|完整橙色1及宽阔镶面，松石绿+墨梅紫|用户认为比较合适，优先发展|
 
-用户偏好2和5，不代表方案最终批准。01-negative.png是方案1的初始负形尝试，不是第六方案。原图浅尖、斜侧或异形轮廓仅为探索，必须换成批准母版。下一轮优先在固定边界内发展折带或镶面语言。避免月桂、星星、放射奖牌纹、厚重双框、细碎图案和单纯橙底白字。
+用户早期偏好2和5，不代表方案最终批准，也不再是下一轮主方向。01-negative.png是方案1的初始负形尝试，不是第六方案。原图浅尖、斜侧或异形轮廓仅为探索，必须换成批准母版。当前沿修订 04 的几何门框与珐琅语言发展系列。避免月桂、星星、放射奖牌纹、厚重双框、细碎图案和单纯橙底白字。
 
 ## 新AI对话生图 SOP
-1. 先读取本文、批准JSON、对应SVG及五方向README。新对话不会自动拥有跨对话记忆或本地文件，必须明确提供这些附件或仓库文件链接。
-2. 将轮廓参考PNG/SVG及方案2或5上传给生图模型。每枚单独一张，不将五枚生在同一画布；先试1，再试3、12验证系列语言。
+2026-10-08 阶段变更：此前「差异化探索不上传历史生成图」用于寻找不同方案；现在已选定修订 04，进入同系列开发，可提供这一张作为材质、配色和结构语言参考。不再混用多个历史方案，不继承其错误轮廓，也不复制数字 1 的布局到所有部件。每枚仍需独立生成、独立评审。UG / LEADER 保持两行与 aws 左对齐，LEADER 与 UG 等宽；旧提示词的字高下限不能迫使 LEADER 再次变宽。
+
+2026-10-07 第二轮数字1十方向已被用户否定：整体造型和质感不满意，不作为后续正向参考。资料保留在 [designs/number-one/2026-10-07-round2/](designs/number-one/2026-10-07-round2/README.md)。第三轮回到第一轮2/5的完整珐琅物件质感，分别探索翻折、非对称镶面、编织穿插、负形、透明釉窗，原图、提示词与网页对话记录见 [designs/number-one/2026-10-07-round3/](designs/number-one/2026-10-07-round3/README.md)。第三轮尚未获用户批准；生成照片仍有外轮廓偏差，不是精确制造图。不能为了固定边界而去掉金属边框、只留下数字，从而破坏用户重视的成品质感。
+
+1. 先读取本文、批准 JSON、对应 SVG、当前设计语言及下一阶段交接。新对话不会自动拥有跨对话记忆或本地文件，必须明确提供这些附件或可访问文件链接；未发布的本地更新不能只给线上网站地址。
+2. 参考输入分工：修订 04 仅约束视觉语言；目标部件的批准 SVG/参考 PNG 约束外形。每枚单独一张，不将五枚生在同一画布。下一阶段建议按 3、6、9、12 顺序逐枚验证；12 是一枚双片屋顶，不是两枚独立编号徽章。
 3. 只设计固定轮廓内部。外边界、宽高比、坡度、收窄量、顶点和屋顶矩形不可改变；不得加外凸装饰、挂带、圆角或擅自变形。
-4. 系列固定字形构造、线宽语言、金属色、橙色主色和辅助色节奏。正面平视、完整不裁切、无透视、无道具。
+4. 系列固定光滑珐琅、银色结构、橙蓝象牙白配色和左对齐米白凸字语言。数字可以适应自身构造，不必重复同一个拱门。正面平视、完整不裁切、无透视、无道具。不得恢复石纹、砖缝、小窗和阶梯。
 5. AI生图不能可靠保证精确毫米尺寸与顶点。要保证最终外轮廓，必须把生成的内部图放入对应批准SVG并按其路径裁切/遮罩；不拉伸整张图片来匹配母版。保留原图和固定母版交付图。
 6. 检查比例、顶点、图形越界、可读数字与系列一致性；字标、金属线宽和工艺另行精修。
 
-提示词骨架：
+当前提示词骨架（各枚尺寸与专属任务见下一阶段交接）：
 ```text
-Create ONE standalone AWS UG LEADER numeral badge, front-facing orthographic,
-complete and uncropped. Use the attached approved contour as an immutable
-boundary. For badge 1: exact 80 x 80 mm gable, vertices
-(40,0),(80,40),(74,80),(6,80),(0,40), bottom width 68 mm.
-Design ONLY the interior. The distinctive numeral 1 is the design itself,
-not ordinary type pasted on a wall. Explore [continuous folded ribbon /
-broad contemporary mosaic inlays]. Orange is the dominant color with
-restrained structural accent colors. The badge must be beautiful on its own.
-Do not change the outline, aspect ratio, roof pitch, taper or vertices.
-No protrusions, wreaths, stars, radial medal ornament, thick double frames,
-extra badges, layout sheets, props, perspective or cropping.
+Create ONE standalone AWS UG LEADER numeral [3 / 6 / 9 / 12] badge.
+Use numeral 1 revision 04 ONLY as the selected series style reference;
+use the target badge's approved V0.12 contour as the immutable boundary.
+Design ONLY the interior: a clearly readable orange numeral integrated
+with monumental simple openings, smooth cobalt-blue and ivory enamel,
+polished silver structural bands and warm ivory raised lettering matching
+the ivory field, defined only by soft highlights and shallow shadows.
+No black letter faces or dark outlines. No stone texture.
+The numeral is the architecture, not ordinary type pasted onto a wall.
+aws, UG and LEADER share one left edge. UG is large; proportionally scale
+LEADER to UG's total width. Keep the text readable and clear of the numeral.
+Front-facing orthographic, complete, white background, no props.
+Do not copy numeral 1's silhouette, add masonry seams, tiny windows,
+stairs, protrusions, thick double frames or extra ornament.
 ```
 
 提示词表达约束意图，不是精度保证；精确交付依靠SVG母版与后处理。金属勋章内部暂按实心底板设计，纸板底座允许裁孔，不能混淆。
 
 ## 文件组织与交接
 - specs/approved/：批准JSON、精确SVG和AI上传PNG；修改需用户重新批准。
-- designs/number-one/2026-10-07/：最新五方向，原图和完整提示词保留。
+- designs/number-one/2026-10-08-kahn-refinement/：当前修订 04 视觉基准；01/02/03 原图保留追溯。
+- designs/number-one/2026-10-07*/、2026-10-08-architects/：历史探索，不覆盖当前视觉决策。
+- docs/design-system-2026-10-08.md、docs/next-stage-generation.md：当前系列规则及下一阶段任务。
 - designs/explorations/：历史逐轮探索，仅为视觉参考，不是当前尺寸。
 - docs/history/：原项目主指南，旧28×34 mm和两枚同图生成规则已失效。
 - docs/badge-outline-workbench.md：几何迭代记录，旧章节不覆盖批准JSON。

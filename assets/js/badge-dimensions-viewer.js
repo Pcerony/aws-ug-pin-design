@@ -24,6 +24,9 @@
       this.scene.add(light);
       this.root = new T.Group();
       this.scene.add(this.root);
+      this.artworkCanvases = {};
+      this.artworkLoadToken = 0;
+      this.artworkCache = new Map();
       this.base = new T.Group();
       this.scene.add(this.base);
       this.observer = new ResizeObserver(() => this.resize());
@@ -59,6 +62,32 @@
         this.renderer.render(this.scene, this.camera);
       };
       this.tick();
+    }
+    async loadArtwork(collection) {
+      this.artworkCollection = collection;
+      this.artworkReady = false;
+      this.host.dataset.artworkCollection = collection;
+      delete this.host.dataset.artworkError;
+      const token = ++this.artworkLoadToken;
+      try {
+        if (!this.artworkCache.has(collection)) {
+          const loading = Promise.all(Object.keys(BadgeArtwork.collections[collection].sources).map(async id =>
+            [id, await BadgeArtwork.canvasFor(id, BadgeApprovedSpec, collection)]
+          )).then(Object.fromEntries);
+          this.artworkCache.set(collection, loading);
+          loading.catch(() => this.artworkCache.delete(collection));
+        }
+        const canvases = await this.artworkCache.get(collection);
+        if (token !== this.artworkLoadToken) return;
+        this.artworkCanvases = canvases;
+        this.artworkReady = true;
+        if (this.params) this.update(this.params, this.options);
+      } catch (error) {
+        if (token !== this.artworkLoadToken) return;
+        this.host.dataset.artworkError = error.message;
+        document.getElementById('viewerError').textContent = error.message;
+        document.getElementById('artworkStatus').textContent = '贴图加载失败';
+      }
     }
     resize() {
       const w = this.host.clientWidth, h = this.host.clientHeight;
@@ -111,9 +140,34 @@
       sprite.scale.set(size * 1.4, size * .7, 1);
       return sprite;
     }
+    artwork(part, model) {
+      const T = window.THREE, canvas = this.artworkCanvases[part.id];
+      if (!canvas) return null;
+      const uv = BadgeArtwork.uvFor(part, model), positions = [], coords = [];
+      const surface = ['3', '9'].includes(part.id) ? part.vertices : part.solid.vertices.slice(part.vertices.length);
+      for (let i = 1; i < surface.length - 1; i++) for (const index of [0, i, i + 1]) {
+        positions.push(...surface[index].map((v, j) => v + part.outward[j] * .025));
+        coords.push(...uv[index]);
+      }
+      const geometry = new T.BufferGeometry();
+      geometry.setAttribute('position', new T.Float32BufferAttribute(positions, 3));
+      geometry.setAttribute('uv', new T.Float32BufferAttribute(coords, 2));
+      geometry.computeVertexNormals();
+      const texture = new T.CanvasTexture(canvas);
+      texture.encoding = T.sRGBEncoding;
+      texture.anisotropy = Math.min(8, this.renderer.capabilities.getMaxAnisotropy());
+      const mesh = new T.Mesh(geometry, new T.MeshBasicMaterial({ map: texture, side: T.DoubleSide, toneMapped: false }));
+      mesh.name = 'artwork-' + part.id;
+      mesh.userData.badgeId = part.id.startsWith('12') ? '12' : part.id;
+      return mesh;
+    }
     update(params, options) {
       this.params = { ...params }; this.options = options;
+      const collection = options.collection || 'metal';
+      if (window.BadgeArtwork && window.BadgeApprovedSpec && collection !== this.artworkCollection) this.loadArtwork(collection);
       const T = window.THREE, model = BadgeDimensions.assembly(params), separation = options.separation;
+      const textured = options.artwork && this.artworkReady;
+      let artworkCount = 0;
       this.clear(this.root); this.clear(this.base);
       const max = Math.max(params.width, params.depth, params.wall + params.rise), labelSize = max / 7;
       for (const part of model.parts) {
@@ -121,11 +175,19 @@
         if (part.id.startsWith('12') && !options.roof) continue;
         const group = new T.Group();
         const mesh = this.panel(part);
+        if (textured) {
+          mesh.material.color.set('#b8b5ab');
+          const puzzle = window.BadgeArtwork.collections[collection]?.kind === 'puzzle';
+          mesh.material.metalness = puzzle ? .12 : .45;
+          mesh.material.roughness = puzzle ? .7 : .35;
+          const artwork = this.artwork(part, BadgeDimensions.build(params));
+          if (artwork) { group.add(artwork); artworkCount++; }
+        }
         mesh.userData.badgeId = part.id.startsWith('12') ? '12' : part.id;
         if (mesh.userData.badgeId === options.selected) mesh.material.emissive.setHex(0x284643);
         group.add(mesh);
         group.add(new T.LineSegments(new T.EdgesGeometry(mesh.geometry), new T.LineBasicMaterial({ color: '#394e51' })));
-        if (part.baseline) {
+        if (part.baseline && !textured) {
           const points = [...part.baseline, part.baseline[0]].map(v => new T.Vector3(...v));
           const guide = new T.Line(new T.BufferGeometry().setFromPoints(points), new T.LineDashedMaterial({ color: '#bc5145', dashSize: 1.4, gapSize: .9 }));
           guide.computeLineDistances();
@@ -143,7 +205,7 @@
         gap.position.y += options.lift || 0;
         this.root.add(gap);
       }
-      if (!separation && options.house !== false) for (const pivot of model.pivots) {
+      if (!textured && !separation && options.house !== false) for (const pivot of model.pivots) {
         const marker = new T.Mesh(new T.SphereGeometry(max * .012, 12, 8), new T.MeshBasicMaterial({ color: '#dc302d' }));
         marker.position.set(...pivot.point);
         marker.position.y += options.lift || 0;
@@ -184,6 +246,10 @@
       this.fit(!this.initialized);
       this.initialized = true;
       this.host.dataset.ready = 'true';
+      this.host.dataset.artworkCount = String(artworkCount);
+      const artworkStatus = document.getElementById('artworkStatus');
+      if (artworkStatus) artworkStatus.textContent = options.artwork ? (textured ? `${BadgeArtwork.collections[collection].label} · ${artworkCount} 个面` : this.host.dataset.artworkError ? '贴图加载失败' : '正在加载设计…') : '素模';
+      if (options.artwork && this.host.dataset.artworkError) document.getElementById('viewerError').textContent = this.host.dataset.artworkError;
       this.host.dataset.parts = String(model.parts.filter(p => options.roof || !p.id.startsWith('12')).length);
       this.host.dataset.solids = String(model.parts.filter(p => (options.roof || !p.id.startsWith('12')) && p.extrusion.some(n => n !== 0)).length);
     }
@@ -204,6 +270,19 @@
       this.controls.minDistance = sphere.radius * 1.1;
       this.controls.maxDistance = distance * 4;
       this.controls.update();
+    }
+    view(direction) {
+      const T = window.THREE;
+      const tilt = this.params.wallTilt * Math.PI / 180;
+      const directions = { iso: [1.2,.75,1.6], '1': [0,-Math.sin(tilt),Math.cos(tilt)], '3': [-1,0,0], '6': [0,-Math.sin(tilt),-Math.cos(tilt)], '9': [1,0,0], '12': [.001,1,.001] };
+      if (!directions[direction]) return;
+      const damping = this.controls.enableDamping;
+      this.controls.enableDamping = false;
+      this.controls.autoRotate = false;
+      this.controls.update();
+      this.camera.position.copy(this.controls.target).add(new T.Vector3(...directions[direction]));
+      this.fit(false);
+      this.controls.enableDamping = damping;
     }
   }
   window.BadgeOutlineViewer = OutlineViewer;

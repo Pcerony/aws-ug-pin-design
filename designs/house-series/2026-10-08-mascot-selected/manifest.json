@@ -1,0 +1,214 @@
+{
+  "date": "2026-10-08",
+  "status": "mascot-selected-3d-review",
+  "outline": "specs/approved/house-v012.json",
+  "productionReady": false,
+  "surfaces": [
+    {
+      "id": "1",
+      "source": "designs/house-series/2026-10-08-facade-fit/badge-1-v06-lower-arch-clean-sides.png",
+      "sourcePolygon": [
+        [
+          625,
+          48
+        ],
+        [
+          1204,
+          651
+        ],
+        [
+          1092,
+          1172
+        ],
+        [
+          146,
+          1172
+        ],
+        [
+          42,
+          623
+        ]
+      ],
+      "width": 80,
+      "height": 80,
+      "fit": {
+        "x": 0.6000000000000014,
+        "y": 1.8884681583476777,
+        "width": 78.8,
+        "height": 76.22306368330464,
+        "scale": 0.06781411359724612
+      },
+      "svg": "badge-1-fitted.svg",
+      "lettering": "ivory"
+    },
+    {
+      "id": "3",
+      "source": "designs/house-series/2026-10-08-mascot-series/badge-3-mascot-v01.png",
+      "sourcePolygon": [
+        [
+          22,
+          145
+        ],
+        [
+          1414,
+          145
+        ],
+        [
+          1283,
+          929
+        ],
+        [
+          121,
+          929
+        ]
+      ],
+      "width": 69.06419724575645,
+      "height": 52,
+      "fit": {
+        "x": 0.6000000000000014,
+        "y": 6.888818016999622,
+        "width": 67.86419724575644,
+        "height": 38.222363966000756,
+        "scale": 0.048753015262756064
+      },
+      "svg": "badge-3-fitted.svg",
+      "lettering": "ivory"
+    },
+    {
+      "id": "6",
+      "source": "designs/house-series/2026-10-08-mascot-series/badge-6-mascot-v03-window-only.png",
+      "sourcePolygon": [
+        [
+          625,
+          20
+        ],
+        [
+          1230,
+          639
+        ],
+        [
+          1138,
+          1224
+        ],
+        [
+          113,
+          1224
+        ],
+        [
+          22,
+          629
+        ]
+      ],
+      "width": 80,
+      "height": 80,
+      "fit": {
+        "x": 0.6000000000000014,
+        "y": 0.7304635761589466,
+        "width": 78.8,
+        "height": 78.5390728476821,
+        "scale": 0.0652317880794702
+      },
+      "svg": "badge-6-fitted.svg",
+      "lettering": "ivory"
+    },
+    {
+      "id": "9",
+      "source": "designs/house-series/2026-10-08-mascot-series/badge-9-mascot-v03-complete-loop-clean-rim.png",
+      "sourcePolygon": [
+        [
+          23,
+          134
+        ],
+        [
+          1416,
+          134
+        ],
+        [
+          1297,
+          933
+        ],
+        [
+          139,
+          933
+        ]
+      ],
+      "width": 69.06419724575645,
+      "height": 52,
+      "fit": {
+        "x": 0.6000000000000014,
+        "y": 6.537152333323977,
+        "width": 67.86419724575644,
+        "height": 38.925695333352046,
+        "scale": 0.04871801668754949
+      },
+      "svg": "badge-9-fitted.svg",
+      "lettering": "ivory"
+    },
+    {
+      "id": "12L",
+      "source": "designs/house-series/2026-10-08-mascot-series/badge-12-mascot-v02-overhead-reclining.png",
+      "sourcePolygon": [
+        [
+          58,
+          49
+        ],
+        [
+          713,
+          49
+        ],
+        [
+          713,
+          1015
+        ],
+        [
+          58,
+          1015
+        ]
+      ],
+      "width": 60.81118318204309,
+      "height": 89.90686582054276,
+      "fit": {
+        "x": 0.6000000000000014,
+        "y": 0.9958734035128955,
+        "width": 59.611183182043085,
+        "height": 87.91511901351697,
+        "scale": 0.09100943997258486
+      },
+      "svg": "badge-12L-fitted.svg",
+      "lettering": "orange"
+    },
+    {
+      "id": "12R",
+      "source": "designs/house-series/2026-10-08-mascot-series/badge-12-mascot-v02-overhead-reclining.png",
+      "sourcePolygon": [
+        [
+          759,
+          49
+        ],
+        [
+          1415,
+          49
+        ],
+        [
+          1415,
+          1015
+        ],
+        [
+          759,
+          1015
+        ]
+      ],
+      "width": 60.81118318204309,
+      "height": 89.90686582054276,
+      "fit": {
+        "x": 0.6000000000000014,
+        "y": 1.062881878370753,
+        "width": 59.611183182043085,
+        "height": 87.78110206380126,
+        "scale": 0.09087070607018763
+      },
+      "svg": "badge-12R-fitted.svg",
+      "lettering": "orange"
+    }
+  ]
+}

@@ -1,0 +1,14 @@
+{
+  "units": "mm",
+  "targetWidthMm": 8.2,
+  "toleranceMm": 1,
+  "measurement": "Visually reviewed roof-house silhouette width in original image pixels, excluding hands/limbs. Approximate artwork scale, not manufacturing dimensions. Overhead/reclining views retain foreshortening.",
+  "samples": [
+    {"surface": "3", "houseWidthPixels": 177},
+    {"surface": "9", "houseWidthPixels": 163},
+    {"surface": "1", "houseWidthPixels": 125},
+    {"surface": "6", "houseWidthPixels": 122},
+    {"surface": "12L", "houseWidthPixels": 95},
+    {"surface": "12R", "houseWidthPixels": 94}
+  ]
+}
