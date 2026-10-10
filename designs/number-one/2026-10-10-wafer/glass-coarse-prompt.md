@@ -1,0 +1,11 @@
+# 镀膜晶片大块不规则版
+
+使用内置 image_gen，以 raw-glass.png 为编辑参考；原版保留，不覆盖。
+
+## 实际提示词
+
+Use case: style-transfer. Edit target: provided iridescent wafer numeral 1 pentagon. Generate one revised design, orthographic face-on, square full-bleed canvas, pure white outside the pentagon, no perspective or mockup.
+Retain black silicon background and subtle teal / champagne / violet thin-film iridescent glass-metal selected areas forming a legible number 1. Crucial change: this is a zoomed-in microscopic crystal material language, NOT a whole wafer sheet with a repeated die array. Replace the tiny regular grid and all busy fine circuitry with approximately 18-24 LARGE unequal tessellated crystal slabs across the ENTIRE pentagon. Irregular widths/heights, staggered T-junctions and a few angled trapezoidal cuts; broad long rectangular shards mix with angular polygons. Controlled deliberate asymmetry. No equal square rows/columns.
+Around 6-8 large iridescent slabs together form the 1: short offset upper-left flag, wide central stem divided into 3 or 4 unequal sections, broad low base split into 2 or 3 slabs. Numeral silhouette remains clearly recognizable despite irregular seams. Black slabs remain majority. No separately overlaid numeral; black and colorful planes share the same connected tessellation.
+Surface language: smooth polished glassy silicon, black graphite, restrained gold-green-purple spectral color washes, visible LARGE simple etched steps or ONE/TWO wide parallel channels per slab at most. NO dense circuit texture, NO microscopic dots, NO checkerboard, NO repeated chip layout, NO tiny traces, NO pixel noise. Broad clean material planes and coarse grooves are the visual focus. Not cracked stone, not random rainbow stained glass, not gemstones, no neon emission.
+Geometry invariant: 80x80mm pentagon with normalized vertices (.5,0),(1,.5),(.925,1),(.075,1),(0,.5), bottom flat. Span full square canvas with apex on top edge and base at bottom. Thin dark rim, no massive frame. Keep aws and UG LEADER small lower-right on one dark slab, no mascot. Only one badge, no captions, no measurement annotations. Preserve the previous color mood but make this MUCH larger-scale, less regular, and less intricate.
