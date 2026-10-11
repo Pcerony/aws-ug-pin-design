@@ -1,0 +1,1 @@
+BadgeFactoryExport.mount(BadgeApprovedSpec, BadgeArtwork);

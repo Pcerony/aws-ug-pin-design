@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>工厂沟通导出 · AWS UG</title>
+  <link rel="icon" href="data:,">
+  <link rel="stylesheet" href="assets/css/project.css">
+  <link rel="stylesheet" href="assets/css/factory-export.css">
+  <script defer src="assets/vendor/project-lucide-0.468.0.min.js"></script>
+  <script defer src="assets/js/project.js"></script>
+  <script defer src="data/approved-dimensions.js"></script>
+  <script defer src="assets/js/badge-artwork.js"></script>
+  <script defer src="assets/js/badge-factory-export.js"></script>
+  <script defer src="assets/js/factory-export-page.js"></script>
+</head>
+<body>
+  <header class="project-nav">
+    <a class="project-brand" href="index.html">AWS UG · 徽章设计</a>
+    <nav aria-label="项目导航">
+      <a href="index.html">方案展示</a>
+      <a href="badge-dimensions.html">尺寸与组装</a>
+      <a href="factory-export.html" aria-current="page">工厂导出</a>
+      <a href="design-archive.html">历史档案</a>
+    </nav>
+  </header>
+  <main class="project-main">
+    <div class="project-heading export-heading">
+      <div><h1>工厂沟通导出</h1><p class="project-sub">V0.12 · 1 / 3 / 6 / 9 / 12 · 五枚 / 六个板面</p></div>
+      <a class="project-btn" href="specs/approved/house-v012.json" download><i data-lucide="download"></i>已确认尺寸 JSON</a>
+    </div>
+    <div class="export-toolbar">
+      <div class="export-options">
+        <label><input id="exportDimensions" type="checkbox" checked>标注尺寸</label>
+        <label for="exportPalette">拼块配色<select id="exportPalette"><option value="leader">橙色 · Leader</option><option value="speaker">绿色 · Speaker</option><option value="volunteer">紫色 · Volunteer</option></select></label>
+      </div>
+      <div class="export-downloads">
+        <button id="downloadMetal" disabled><i data-lucide="download"></i>金属版整套 PNG</button>
+        <button id="downloadPuzzle" disabled><i data-lucide="download"></i>拼块版整套 PNG</button>
+      </div>
+    </div>
+    <div class="export-preview-head">
+      <div class="export-tabs" aria-label="导出预览">
+        <button data-export-view="puzzle" aria-pressed="true">拼块版</button>
+        <button data-export-view="metal" aria-pressed="false">金属版</button>
+      </div>
+      <span class="export-status" id="exportStatus" role="status">正在加载…</span>
+    </div>
+    <p class="export-error" id="exportError" role="alert"></p>
+    <div class="export-sheet" id="sheetPreview" aria-busy="true"></div>
+    <div class="export-docs"><a href="docs/factory-sampling-handoff.md">工厂沟通清单</a><a href="specs/approved/README.md">尺寸母版与工程边界</a></div>
+  </main>
+  <footer class="project-footer"><span>工厂沟通参考 · 非量产工程图</span><span>材料 / 浮雕 / 连接 / 公差待确认</span></footer>
+</body>
+</html>

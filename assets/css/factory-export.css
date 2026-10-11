@@ -1,0 +1,23 @@
+.export-heading{margin-bottom:24px}
+.export-toolbar{display:flex;gap:20px;align-items:center;justify-content:space-between;flex-wrap:wrap;border-top:1px solid var(--line);border-bottom:1px solid var(--line);padding:16px 0}
+.export-options,.export-downloads{display:flex;align-items:center;gap:14px;flex-wrap:wrap}
+.export-options label{display:flex;align-items:center;gap:8px;font-size:13px}
+.export-options input{accent-color:var(--teal)}
+.export-options select{padding:8px;border:1px solid #c7cdce;border-radius:4px;background:#fff;max-width:100%}
+.export-downloads button{display:inline-flex;align-items:center;gap:7px;padding:9px 12px;background:#fff;border:1px solid #c7cdce;border-radius:4px;font-size:13px}
+.export-downloads button:last-child{background:#167d81;color:#fff;border-color:#167d81}
+.export-downloads svg{width:16px;height:16px}
+button:disabled,select:disabled{opacity:.55;cursor:wait}
+.export-preview-head{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;padding:20px 0}
+.export-tabs{display:flex;border:1px solid #c7cdce;border-radius:4px;overflow:hidden}
+.export-tabs button{border:0;background:#fff;font-size:13px;padding:8px 16px}
+.export-tabs button[aria-pressed=true]{background:#e4eeee;color:#166b70}
+.export-tabs button+button{border-left:1px solid #c7cdce}
+.export-status{font-size:12px;color:#657075}
+.export-error{font-size:13px;color:#aa3926;margin-bottom:12px}
+.export-error:empty{display:none}
+.export-sheet{background:#fff;border:1px solid var(--line);width:100%;aspect-ratio:3/2;overflow:hidden}
+.export-sheet canvas{display:block;width:100%;height:auto}
+.export-sheet[aria-busy=true]{opacity:.6}
+.export-docs{margin-top:20px;display:flex;gap:16px;flex-wrap:wrap;font-size:13px;color:#526b70}
+@media(max-width:650px){.export-toolbar{gap:16px}.export-options{gap:12px}.export-downloads{width:100%;gap:8px}.export-downloads button{flex:1;justify-content:center}.export-preview-head{align-items:flex-start;flex-direction:column}.export-status{line-height:1.6}.export-options label{flex-wrap:wrap}}
