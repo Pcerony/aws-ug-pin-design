@@ -1,7 +1,7 @@
 (function (root, factory) {
-  if (typeof module === 'object' && module.exports) module.exports = factory(require('./badge-dimensions-geometry.js'), require('../vendor/badge-jscad-modeling-2.12.1.min.js'));
-  else root.BadgeBase = factory(root.BadgeDimensions, root.jscadModeling);
-})(typeof globalThis !== 'undefined' ? globalThis : this, function (G, J) {
+  if (typeof module === 'object' && module.exports) module.exports = factory(require('./badge-dimensions-geometry.js'), require('../vendor/badge-jscad-modeling-2.12.1.min.js'), require('./badge-accessory.js'));
+  else root.BadgeBase = factory(root.BadgeDimensions, root.jscadModeling, root.BadgeAccessory);
+})(typeof globalThis !== 'undefined' ? globalThis : this, function (G, J, A) {
   'use strict';
   const { geometries, booleans, primitives, transforms, expansions, extrusions } = J;
   const cross = (a,b,c) => (b[0]-a[0])*(c[1]-a[1])-(b[1]-a[1])*(c[0]-a[0]);
@@ -24,12 +24,12 @@
     return transforms.translate([0,bottom,0], transforms.rotateX(-Math.PI/2, extrusions.extrudeLinear({height},shape)));
   }
   let cacheKey, cache;
-  function build(p) {
+  function build(p, accessory) {
     if (!G.validate(p)) throw new Error('Invalid base dimensions');
-    const key=JSON.stringify(p); if(key===cacheKey) return cache;
+    const key=JSON.stringify([p,accessory]); if(key===cacheKey) return cache;
     const parts=G.assembly(p).parts;
     const datum=Math.min(...parts.flatMap(part=>part.solid.vertices.map(v=>v[1])));
-    const layerCount=5, thickness=p.baseLayerThickness*layerCount;
+    const layerCount=1, thickness=p.baseSolidThickness;
     const top=datum+thickness, bottom=datum;
     const footprints=[], warnings=[];
     for(const part of parts) {
@@ -47,24 +47,34 @@
       if(p.baseClearance>0) shape=expansions.offset({delta:p.baseClearance,corners:'edge'},shape);
       footprints.push(shape);
     }
-    const rectangle=primitives.rectangle({size:[p.baseWidth,p.baseDepth]});
+    if (accessory && A) for(const item of A.activeItems(accessory)) {
+      const outline=hull(A.insertionFootprint(p,{top,bottom},item));
+      if(outline.length>=3) {
+        let slot=geometries.geom2.fromPoints(outline);
+        if(p.baseClearance>0) slot=expansions.offset({delta:p.baseClearance,corners:'edge'},slot);
+        footprints.push(slot);
+      }
+    }
+    const extension=p.baseFrontExtension, depth=p.baseDepth+extension;
+    // JSCAD's second planar coordinate is -Z: extend only toward the front (+Z).
+    const rectangle=transforms.translate([0,-extension/2],primitives.rectangle({size:[p.baseWidth,depth]}));
     const slots=footprints.length ? booleans.union(...footprints) : geometries.geom2.create();
     const slotOutlines=footprints.length ? geometries.geom2.toOutlines(slots) : [];
-    const rim=Math.min(...slotOutlines.flatMap(points=>points.flatMap(([x,z])=>[p.baseWidth/2-Math.abs(x),p.baseDepth/2-Math.abs(z)])));
+    const rim=Math.min(...slotOutlines.flatMap(points=>points.flatMap(([x,z])=>[p.baseWidth/2-Math.abs(x),z+p.baseDepth/2+extension,p.baseDepth/2-z])));
     if(rim<2) warnings.push('插槽距底座外沿不足 2 mm，请增大底座长宽。');
     const surface=footprints.length ? booleans.subtract(rectangle,slots) : rectangle;
     const hasSurface=geometries.geom2.toSides(surface).length>0;
     const solid=hasSurface ? upright(surface,thickness,datum) : geometries.geom3.create();
-    const layerSolid=hasSurface ? upright(surface,p.baseLayerThickness,datum) : geometries.geom3.create();
+    const layerSolid=solid;
     const layerPolygons=geometries.geom3.toPolygons(layerSolid).map(poly=>poly.vertices);
-    const layers=Array.from({length:layerCount},(_,i)=>({id:`base-${i+1}`,offset:i*p.baseLayerThickness,solid:layerSolid,polygons:layerPolygons}));
+    const layers=[{id:'base-1',offset:0,solid:layerSolid,polygons:layerPolygons}];
     const polygons=geometries.geom3.toPolygons(solid).map(poly=>poly.vertices);
     cacheKey=key;
-    return cache={datum,top,bottom,width:p.baseWidth,depth:p.baseDepth,thickness,layerCount,layerThickness:p.baseLayerThickness,layers,slotDepth:thickness,clearance:p.baseClearance,solid,polygons,slotOutlines,topOutlines:geometries.geom2.toOutlines(surface),warnings};
+    return cache={datum,top,bottom,width:p.baseWidth,depth,frontExtension:extension,planOffsetZ:p.baseDepth/2+extension,thickness,layerCount,layerThickness:thickness,layers,slotDepth:thickness,clearance:p.baseClearance,solid,polygons,slotOutlines,topOutlines:geometries.geom2.toOutlines(surface),warnings};
   }
   function svg(b) {
-    const paths=b.topOutlines.map(points=>G.path(points.map(([x,z])=>[x+b.width/2,z+b.depth/2]))).join(' ');
-    return `<svg xmlns="http://www.w3.org/2000/svg" width="${G.fmt(b.width)}mm" height="${G.fmt(b.depth)}mm" viewBox="0 0 ${G.fmt(b.width)} ${G.fmt(b.depth)}"><title>Cardboard base layer; cut 5 identical copies; through slots; millimeters</title><path d="${paths}" fill="#bcc8bb" fill-rule="evenodd" stroke="#415446" stroke-width=".2"/></svg>`;
+    const paths=b.topOutlines.map(points=>G.path(points.map(([x,z])=>[x+b.width/2,z+b.planOffsetZ]))).join(' ');
+    return `<svg xmlns="http://www.w3.org/2000/svg" width="${G.fmt(b.width)}mm" height="${G.fmt(b.depth)}mm" viewBox="0 0 ${G.fmt(b.width)} ${G.fmt(b.depth)}"><title>Single base slab; thickness ${G.fmt(b.thickness)} mm; cut 1 copy; through slots; millimeters</title><path d="${paths}" fill="#bcc8bb" fill-rule="evenodd" stroke="#415446" stroke-width=".2"/></svg>`;
   }
   return {build,partSolid,svg};
 });

@@ -27,6 +27,7 @@
       this.artworkCanvases = {};
       this.artworkLoadToken = 0;
       this.artworkCache = new Map();
+      this.accessoryImages = new Map();
       this.base = new T.Group();
       this.scene.add(this.base);
       this.observer = new ResizeObserver(() => this.resize());
@@ -161,6 +162,41 @@
       mesh.userData.badgeId = part.id.startsWith('12') ? '12' : part.id;
       return mesh;
     }
+    accessoryMesh(params, base, settings) {
+      const T=window.THREE, A=window.BadgeAccessory;
+      const s=A.normalize(settings), asset=window.BadgeAccessoryAssets[s.role];
+      const m=A.placement(params,base,s,asset.height/asset.width), shape=new T.Shape();
+      asset.contour.forEach(([u,v],i)=>shape[i?'lineTo':'moveTo']((u-.5)*m.width,(1-v)*m.height));
+      shape.closePath();
+      const geometry=new T.ExtrudeGeometry(shape,{depth:m.thickness,bevelEnabled:false,steps:1});
+      geometry.translate(0,0,-m.thickness/2);
+      const group=new T.Group();group.name='accessory-'+s.role;
+      group.add(new T.Mesh(geometry,new T.MeshStandardMaterial({color:'#aeb1b2',metalness:.55,roughness:.45,side:T.DoubleSide})));
+      const image=this.accessoryImages.get(s.role);
+      if(image && !(image instanceof Promise)) {
+        const front=new T.ShapeGeometry(shape), coords=front.getAttribute('position'),uv=front.getAttribute('uv');
+        for(let i=0;i<coords.count;i++) uv.setXY(i,coords.getX(i)/m.width+.5,coords.getY(i)/m.height);
+        const texture=new T.Texture(image);texture.needsUpdate=true;texture.encoding=T.sRGBEncoding;
+        texture.anisotropy=Math.min(8,this.renderer.capabilities.getMaxAnisotropy());
+        const face=new T.Mesh(front,new T.MeshBasicMaterial({map:texture,transparent:true,alphaTest:.05,side:T.FrontSide,toneMapped:false,polygonOffset:true,polygonOffsetFactor:-2,polygonOffsetUnits:-2}));
+        face.position.z=m.thickness/2+m.width*.001;face.name='accessory-artwork';group.add(face);
+      } else if(!image) {
+        const loading=new Promise((resolve,reject)=>{
+          const img=new Image();img.onload=()=>resolve(img);img.onerror=()=>reject(new Error('身份牌贴图加载失败'));img.src=asset.src;
+        });
+        this.accessoryImages.set(s.role,loading);
+        loading.then(img=>{
+          this.accessoryImages.set(s.role,img);
+          if(this.params && BadgeAccessory.activeItems(this.options.accessory).some(item=>item.role===s.role)) this.update(this.params,this.options);
+        }).catch(error=>{
+          this.accessoryImages.delete(s.role);
+          document.getElementById('accessoryStatus').textContent=error.message;
+        });
+      }
+      group.position.set(...m.position);group.rotation.set(...m.rotation);
+      group.traverse(object=>{object.userData.badgeId='accessory';});
+      return group;
+    }
     update(params, options) {
       this.params = { ...params }; this.options = options;
       const collection = options.collection || 'puzzle';
@@ -212,7 +248,7 @@
         marker.name = `wall-pivot-${pivot.id}`;
         this.root.add(marker);
       }
-      const plinth = BadgeBase.build(params);
+      const plinth = BadgeBase.build(params,options.accessory);
       if (options.base !== false) for (const [i,layer] of plinth.layers.entries()) {
         const triangles = [], geometry = new T.BufferGeometry();
         for (const face of layer.polygons) for (let k=1;k<face.length-1;k++) triangles.push(...face[0],...face[k],...face[k+1]);
@@ -227,7 +263,16 @@
         group.add(new T.LineSegments(new T.EdgesGeometry(geometry),new T.LineBasicMaterial({color:'#52654e'})));
         this.root.add(group);
       }
-      const grid = new T.GridHelper(Math.max(max, params.baseWidth, params.baseDepth) * 3 + separation * 4, 20, '#b3c2c4', '#e0e6e6');
+      const accessories=options.accessory?BadgeAccessory.activeItems(options.accessory):[];
+      accessories.forEach((item,i)=>{
+        const group=this.accessoryMesh(params,plinth,item);
+        group.userData.accessoryIndex=i;
+        this.root.add(group);
+      });
+      this.host.dataset.accessoryCount=String(accessories.length);
+      if(accessories.length)this.host.dataset.accessoryRole=accessories.map(item=>item.role).join(',');
+      else delete this.host.dataset.accessoryRole;
+      const grid = new T.GridHelper(Math.max(max, params.baseWidth, plinth.depth) * 3 + separation * 4, 20, '#b3c2c4', '#e0e6e6');
       grid.position.y = plinth.bottom - (options.base !== false ? (plinth.layerCount-1)*separation : 0) - .2;
       this.base.add(grid);
       // Side height follows the roof intersection, not the tapered gable edge.

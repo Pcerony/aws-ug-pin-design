@@ -9,22 +9,22 @@ test('base parameters migrate and validate independently of badge contours', () 
   for (const k of Object.keys(legacy).filter(k => k.startsWith('base'))) delete legacy[k];
   assert.equal(G.importSpec({schema:'aws-ug-badge-outline/v0.10', units:'mm', parameters:legacy}).params.baseFloor, 1.5);
 });
-test('base is five identical through-cut cardboard layers with clear insertion slots', () => {
+test('base is a single adjustable solid with clear insertion slots', () => {
   const B = require('../assets/js/badge-dimensions-base.js');
   for (const wallTilt of [0, 20, 45]) {
     const p = {...G.defaults, wallTilt, frontThickness:3, backThickness:2, taper:3, inset:4};
     const b = B.build(p), a = G.assembly(p);
     assert.ok(b.polygons.length > 0);
-    assert.ok(Math.abs(b.top - b.datum - 5*p.baseLayerThickness)<1e-9);
+    assert.ok(Math.abs(b.top - b.datum - p.baseSolidThickness)<1e-9);
     assert.equal(b.bottom, b.datum);
-    assert.equal(b.layers.length, 5);
-    assert.equal(b.layerThickness, p.baseLayerThickness);
+    assert.equal(b.layers.length, 1);
+    assert.equal(b.layerThickness, p.baseSolidThickness);
     const originalVolume = p.baseWidth*p.baseDepth*b.thickness;
     assert.ok(J.measurements.measureVolume(b.solid) < originalVolume);
     for (const [i,layer] of b.layers.entries()) {
       assert.deepEqual(layer.polygons,b.layers[0].polygons);
-      assert.equal(layer.offset, i*p.baseLayerThickness);
-      assert.ok(Math.abs(J.measurements.measureVolume(layer.solid)*5-J.measurements.measureVolume(b.solid))<1e-5);
+      assert.equal(layer.offset, 0);
+      assert.ok(Math.abs(J.measurements.measureVolume(layer.solid)-J.measurements.measureVolume(b.solid))<1e-5);
     }
     // Test actual solids throughout the insertion path, not just outlines.
     for (const lift of [0, .1, 1, 2, 4, 10]) for (const part of a.parts) {
@@ -43,8 +43,8 @@ test('undersized bases and zero-thickness panels produce explicit warnings', () 
 test('extreme supported parameters keep the Boolean solid finite and clear of insertion', () => {
   const B = require('../assets/js/badge-dimensions-base.js');
   for (const changes of [
-    {baseClearance:0,wallTilt:45,frontThickness:20,backThickness:20,baseLayerThickness:8},
-    {width:20,wall:15,rise:100,roofOverhangSide:50,baseLayerThickness:.1},
+    {baseClearance:0,wallTilt:45,frontThickness:20,backThickness:20,baseSolidThickness:40},
+    {width:20,wall:15,rise:100,roofOverhangSide:50,baseSolidThickness:.5},
     {width:150,wall:150,rise:3,depth:150,inset:70,baseWidth:400,baseDepth:400,baseClearance:3},
   ]) {
     const p={...G.defaults,...changes},b=B.build(p);
@@ -56,9 +56,10 @@ test('extreme supported parameters keep the Boolean solid finite and clear of in
     }
   }
 });
-test('legacy base total thickness migrates to five equal layers', () => {
-  const p={...G.defaults,baseThickness:6,baseFloor:2}; delete p.baseLayerThickness;
+test('legacy base total thickness migrates to a single slab without changing total height', () => {
+  const p={...G.defaults,baseThickness:6,baseFloor:2}; delete p.baseLayerThickness; delete p.baseSolidThickness;
   const imported=G.importSpec({schema:'aws-ug-badge-outline/v0.11',units:'mm',parameters:p,status:'locked-draft'});
   assert.equal(imported.params.baseLayerThickness,1.6);
+  assert.equal(imported.params.baseSolidThickness,8);
   assert.equal(imported.locked,false);
 });

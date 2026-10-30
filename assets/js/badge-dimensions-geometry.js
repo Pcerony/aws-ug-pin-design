@@ -7,11 +7,14 @@
   const defaults = { width: 50, wall: 50, rise: 30, depth: 30, taper: 0, gap: 2, inset: 0, frontThickness: 1, backThickness: 1, leftThickness: 1, rightThickness: 1, roofThickness: 1, roofOverhangDepth: 0, roofOverhangSide: 0, wallTilt: 0 };
   const limits = { width: [20, 150], wall: [15, 150], rise: [3, 100], depth: [20, 150], taper: [0, 6], gap: [0, 20], inset: [0, 70], frontThickness: [0, 20], backThickness: [0, 20], leftThickness: [0, 20], rightThickness: [0, 20], roofThickness: [0, 20], roofOverhangDepth: [0, 50], roofOverhangSide: [0, 50], wallTilt: [0, 45] };
   const round = n => Math.round(n * 1000) / 1000;
-  Object.assign(defaults, { baseWidth: 100, baseDepth: 80, baseThickness: 4, baseFloor: 1.5, baseClearance: .25, baseLayerThickness: 1.1 });
-  Object.assign(limits, { baseWidth: [20, 400], baseDepth: [20, 400], baseThickness: [.5, 40], baseFloor: [.5, 20], baseClearance: [0, 3], baseLayerThickness: [.1, 12] });
+  Object.assign(defaults, { baseWidth: 100, baseDepth: 80, baseThickness: 4, baseFloor: 1.5, baseClearance: .25, baseLayerThickness: 1.1, baseFrontExtension: 0 });
+  Object.assign(limits, { baseWidth: [20, 400], baseDepth: [20, 400], baseThickness: [.5, 40], baseFloor: [.5, 20], baseClearance: [0, 3], baseLayerThickness: [.1, 12], baseFrontExtension: [0, 150] });
   const fmt = n => Number(n.toFixed(2)).toString();
+  defaults.baseSolidThickness=5.5;
+  limits.baseSolidThickness=[.5,40];
+  limits.taper[1]=30;
   function validate(p) {
-    return !!p && Object.keys(defaults).every(k => typeof p[k] === 'number' && Number.isFinite(p[k]) && p[k] >= limits[k][0] && p[k] <= limits[k][1]) && p.inset < p.width / 2 && p.leftThickness + p.rightThickness < p.width - 2 * p.inset;
+    return !!p && Object.keys(defaults).every(k => typeof p[k] === 'number' && Number.isFinite(p[k]) && p[k] >= limits[k][0] && p[k] <= limits[k][1]) && p.taper < p.width / 2 && p.inset < p.width / 2 && p.leftThickness + p.rightThickness < p.width - 2 * p.inset;
   }
   function build(p) {
     if (!validate(p)) throw new Error('Invalid badge dimensions');
@@ -58,6 +61,8 @@
     if (['aws-ug-badge-outline/v0.1', 'aws-ug-badge-outline/v0.2'].includes(spec.schema)) source = { inset: 0, ...source };
     // Legacy drafts near the center may not have room for the new default thickness.
     if (migrated && source && source.leftThickness + source.rightThickness >= source.width - 2 * source.inset && !Object.keys(spec.parameters || {}).some(k => k.endsWith('Thickness'))) source = { ...source, leftThickness: 0, rightThickness: 0 };
+    source = {baseFrontExtension: 0, ...source};
+    if(source.baseSolidThickness===undefined) source.baseSolidThickness=source.baseLayerThickness*5;
     if (!validate(source)) throw new Error('参数缺失或超出范围；内凹及左右厚度须保留正的内部净宽。');
     const params = Object.fromEntries(Object.keys(defaults).map(k => [k, source[k]]));
     return { params, locked: !migrated && spec.status === 'locked-draft', migrated };
